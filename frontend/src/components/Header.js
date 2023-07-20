@@ -16,7 +16,7 @@ const Header = () => {
           </NavLink>
         </div>
         <div className="pageTitle">
-          <h2>Poke TCG Juego de Batalla!</h2>
+          <h2>Poke Batalla TCG!</h2>
         </div>
         <div className="navbar-logo">
           <NavLink exact to="/" className="navbar-brand">

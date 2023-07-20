@@ -19,7 +19,7 @@ const Navbar = () => {
             to="/batalla5cartas"
             activeClassName="active"
           >
-            Juego de Batalla por HP
+            Batalla!
           </NavLink>
         </li>
         <li>

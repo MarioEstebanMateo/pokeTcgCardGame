@@ -37,7 +37,7 @@ const Home = () => {
           className="buttonHome"
           onClick={() => navigate("/batalla5cartas")}
         >
-          Juego de Batalla por HP
+          Batalla!
         </button>
         <button className="buttonHome" onClick={() => navigate("/abrirsobre")}>
           Abrir Sobre
