@@ -13,6 +13,19 @@
     src: url('../font/PocketMonk-15ze.ttf');
   }
 
+.board {
+    background-image: url('../img/trainer_battles_arena.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0.9;
+}
+
 #drawCardPlayerButton {
     background-color: #0075BE;
     color: #FFCC00;

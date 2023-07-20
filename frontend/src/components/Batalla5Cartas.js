@@ -159,7 +159,7 @@ const Batalla5Cartas = () => {
 
   return (
     //show playerCards and playerTotalHP
-    <div className="container-fluid text-center">
+    <div className="board container-fluid text-center">
       <h2 className="textPlayerAndComputer">Jugador</h2>
       <button id="drawCardPlayerButton" onClick={handleDrawCardPlayer}>
         Sacar una carta
