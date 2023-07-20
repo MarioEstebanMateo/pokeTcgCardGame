@@ -103,7 +103,8 @@ const Batalla5Cartas = () => {
       return;
     }
     if (playerTotalHP > computerTotalHP) {
-      setWinner("Ganaste! Felicitaciones! Jugamos de nuevo?");
+      // setWinner("Ganaste! Felicitaciones! Jugamos de nuevo?");
+      setWinner("Ganaste! Felicitaciones! Jugamos de nuevo?!");
     } else if (playerTotalHP < computerTotalHP) {
       setWinner("Perdiste... Yo que vos, jugaría de nuevo!");
     } else {
@@ -113,7 +114,7 @@ const Batalla5Cartas = () => {
       .fire({
         icon: "success",
         title: "Batalla terminada!",
-        html: `Player HP: ${playerTotalHP} <br> Computer HP: ${computerTotalHP} <br> <br> Ganador: ${winner}`,
+        html: `Player HP: ${playerTotalHP} <br> Computer HP: ${computerTotalHP} <br> <br> Resultado: ${winner}`,
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: `Nuevo Juego`,
@@ -159,46 +160,50 @@ const Batalla5Cartas = () => {
   return (
     //show playerCards and playerTotalHP
     <div className="container-fluid text-center">
-      <h2>Player</h2>
+      <h2 className="textPlayerAndComputer">Jugador</h2>
       <button id="drawCardPlayerButton" onClick={handleDrawCardPlayer}>
         Sacar una carta
       </button>
-      <p>Total HP: {playerTotalHP}</p>
+      {/* <p>Total HP: {playerTotalHP}</p> */}
       <div id="playerCardContainer">
         {playerCards.map((card) => (
           <div key={card.id}>
-            <h3>{card.name}</h3>
-            <img src={card.images.small} alt={card.name} />
-            <p>Set: {card.set.name}</p>
+            {/* <h3>{card.name}</h3> */}
+            <img
+              className="cardImage"
+              src={card.images.small}
+              alt={card.name}
+            />
+            {/* <p>Set: {card.set.name}</p>
             <p>Rarity: {card.rarity}</p>
             <p>Type: {card.types.join(", ")}</p>
             <p>HP: {card.hp}</p>
-            <p>Price: ${card.cardmarket.prices.averageSellPrice}</p>
+            <p>Price: ${card.cardmarket.prices.averageSellPrice}</p> */}
           </div>
         ))}
       </div>
-      <h2>Computer</h2>
-      <button id="drawCardPlayerButton" onClick={handleDrawComputerCards}>
+      <h2 className="textPlayerAndComputer">Computadora</h2>
+      <button id="drawCardsComputerButton" onClick={handleDrawComputerCards}>
         Sacar las 5 cartas de la computadora
       </button>
-      <p>Total HP: {computerTotalHP}</p>
+      {/* <p>Total HP: {computerTotalHP}</p> */}
       <div id="computerCardContainer">
         {computerCards.map((card) => (
           <div key={card.id}>
-            <h3>{card.name}</h3>
+            {/* <h3>{card.name}</h3> */}
             <img src={card.images.small} alt={card.name} />
-            <p>Set: {card.set.name}</p>
+            {/* <p>Set: {card.set.name}</p>
             <p>Rarity: {card.rarity}</p>
             <p>Type: {card.types.join(", ")}</p>
             <p>HP: {card.hp}</p>
-            <p>Price: ${card.cardmarket.prices.averageSellPrice}</p>
+            <p>Price: ${card.cardmarket.prices.averageSellPrice}</p> */}
           </div>
         ))}
       </div>
       <button id="battleButton" onClick={handleBattle}>
         Batalla
       </button>
-      <h2>Resultado: {winner}</h2>
+      {/* <h2>Resultado: {winner}</h2> */}
     </div>
   );
 };
