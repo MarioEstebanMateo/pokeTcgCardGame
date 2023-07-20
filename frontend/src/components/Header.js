@@ -12,7 +12,7 @@ const Header = () => {
       <header className="headerContainer">
         <div className="navbar-logo">
           <NavLink exact to="/" className="navbar-brand">
-            <img src={logo} alt="logo" />
+            <img className="logo" src={logo} alt="logo" />
           </NavLink>
         </div>
         <div className="pageTitle">
@@ -20,7 +20,7 @@ const Header = () => {
         </div>
         <div className="navbar-logo">
           <NavLink exact to="/" className="navbar-brand">
-            <img src={logo5} alt="logo" />
+            <img className="logo" src={logo5} alt="logo" />
           </NavLink>
         </div>
       </header>

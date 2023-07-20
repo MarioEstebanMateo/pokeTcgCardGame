@@ -33,11 +33,17 @@
   text-decoration: none;
   color: #FFCC00;
   font-family: pokeFont3;
-  font-size: 1.rem;
+  font-size: 1rem;
   font-weight: 500;
   transition: all 0.2s ease-in-out;
 }
 
 .navLink:hover {
   color: #FFFFFF;
+}
+
+@media (max-width: 375px) {
+  .navLink {
+    font-size: 0.8rem;
+  }
 }

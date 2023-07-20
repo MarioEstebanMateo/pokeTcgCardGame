@@ -14,10 +14,10 @@ const Home = () => {
   return (
     <div className="container-fluid">
       <div className="imgPokeContainer">
-        <img src={imgPoke1} alt="logo" />
-        <img src={imgPoke2} alt="logo" />
-        <img src={imgPoke3} alt="logo" />
-        <img src={imgPoke4} alt="logo" />
+        <img className="imgPoke" src={imgPoke1} alt="logo" />
+        <img className="imgPoke" src={imgPoke2} alt="logo" />
+        <img className="imgPoke" src={imgPoke4} alt="logo" />
+        <img className="imgPoke" src={imgPoke3} alt="logo" />
       </div>
       <div className="homeText text-center">
         <h1>Bienvenido al Juego!</h1>

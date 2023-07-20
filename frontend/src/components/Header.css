@@ -39,6 +39,11 @@ body {
     text-align: center;
 }
 
-.navbar-brand img {
-    
-}
+@media (max-width: 375px) {
+    .logo {
+        height: 70px;
+    }
+    .pageTitle {
+        font-size: 20px;
+    }
+  }
