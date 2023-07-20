@@ -1,0 +1,27 @@
+#drawCardPlayerButton {
+
+}
+
+#playerCardContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+#drawCardsComputerButton{
+
+}
+
+#computerCardContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+#battleButton{
+
+}
+
+#resetButton{
+    
+}
