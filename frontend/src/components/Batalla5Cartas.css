@@ -4,8 +4,10 @@
 
 #playerCardContainer {
     display: flex;
+    justify-content: space-evenly;
     flex-direction: row;
     gap: 30px;
+    flex-wrap: wrap;
 }
 
 #drawCardsComputerButton{
@@ -14,8 +16,10 @@
 
 #computerCardContainer{
     display: flex;
+    justify-content: space-evenly;
     flex-direction: row;
     gap: 30px;
+    flex-wrap: wrap;
 }
 
 #battleButton{

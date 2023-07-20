@@ -1,0 +1,74 @@
+@font-face {
+  font-family: pokeFont;
+  src: url('../font/PokemonSolidNormal-xyWR.ttf');
+}
+
+@font-face {
+  font-family: pokeFont2;
+  src: url('../font/PokemonHollowNormal-pyPZ.ttf');
+}
+
+@font-face {
+  font-family: pokeFont3;
+  src: url('../font/PocketMonk-15ze.ttf');
+}
+
+.imgPokeContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.homeText {
+  background-color: #0075BE;
+  border-radius: 1rem;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.homeText h1 {
+  font-family: pokeFont2;
+  font-size: 50px;
+  font-weight: bold;
+  color: #FFCC00;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.homeText h4 {
+  color: #FFCC00;
+  font-family: Roboto;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  gap: 40px;
+}
+
+.buttonHome {
+  background-color: #0075BE;
+  color: #FFCC00;
+  font-family: pokeFont3;
+  font-size: 20px;
+  border-radius: 1rem;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
