@@ -135,7 +135,7 @@ const Batalla5Cartas = () => {
           .fire({
             icon: "success",
             title: "Batalla terminada!",
-            html: `Player HP: ${playerTotalHP} <br> Computer HP: ${computerTotalHP} <br> <br> Resultado: Ganaste! Jugamos otra vez?`,
+            html: `Jugador Total HP: ${playerTotalHP} <br> Computadora Total HP: ${computerTotalHP} <br> <br> Resultado: Ganaste! Jugamos otra vez?`,
             showDenyButton: true,
             showCancelButton: true,
             confirmButtonText: `Nuevo Juego`,
@@ -155,7 +155,7 @@ const Batalla5Cartas = () => {
           .fire({
             icon: "success",
             title: "Batalla terminada!",
-            html: `Player HP: ${playerTotalHP} <br> Computer HP: ${computerTotalHP} <br> <br> Resultado: Perdiste! Yo que voz me jugaria otro!`,
+            html: `Jugador Total HP: ${playerTotalHP} <br> Computadora Total HP: ${computerTotalHP} <br> <br> Resultado: Perdiste! Yo que voz me jugaria otro!`,
             showDenyButton: true,
             showCancelButton: true,
             confirmButtonText: `Nuevo Juego`,
@@ -175,7 +175,7 @@ const Batalla5Cartas = () => {
           .fire({
             icon: "success",
             title: "Batalla terminada!",
-            html: `Player HP: ${playerTotalHP} <br> Computer HP: ${computerTotalHP} <br> <br> Resultado: Empate! Esto no puede quedar así! Juguemos otro! Dale, hace click en "Nuevo Juego"!`,
+            html: `Jugador Total HP: ${playerTotalHP} <br> Computadora Total HP: ${computerTotalHP} <br> <br> Resultado: Empate! Esto no puede quedar así! Juguemos otro! Dale, hace click en "Nuevo Juego"!`,
             showDenyButton: true,
             showCancelButton: true,
             confirmButtonText: `Nuevo Juego`,
