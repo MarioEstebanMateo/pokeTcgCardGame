@@ -257,11 +257,16 @@ const Batalla5Cartas = () => {
               <div>Nombre: {card.name}</div>
               <div>Nro en la Pokedex: {card.nationalPokedexNumbers}</div>
               <div>Set: {card.set.name}</div>
+              <div>Serie: {card.set.series}</div>
+              <div>
+                Fecha de Lanzamiento:{" "}
+                {new Date(card.set.releaseDate).toLocaleDateString("es-AR")}
+              </div>
               <div>Total de Impresiones: {card.set.printedTotal}</div>
               <div>Rareza: {card.rarity}</div>
               <div>Tipo: {card.types.join(", ")}</div>
-              {/* <div>Puntos HP: {card.hp}</div>
-              <div>Precio: ${card.tcgplayer.prices.holofoil.market}</div> */}
+              {/* <div>Puntos HP: {card.hp}</div> */}
+              {/* <div>Precio: ${card.cardmarket.prices.averageSellPrice}</div> */}
             </div>
           </div>
         ))}
@@ -284,11 +289,16 @@ const Batalla5Cartas = () => {
               <div>Nombre: {card.name}</div>
               <div>Nro en la Pokedex: {card.nationalPokedexNumbers}</div>
               <div>Set: {card.set.name}</div>
+              <div>Serie: {card.set.series}</div>
+              <div>
+                Fecha de Lanzamiento:{" "}
+                {new Date(card.set.releaseDate).toLocaleDateString("es-AR")}
+              </div>
               <div>Total de Impresiones: {card.set.printedTotal}</div>
               <div>Rareza: {card.rarity}</div>
               <div>Tipo: {card.types.join(", ")}</div>
-              {/* <div>Puntos HP: {card.hp}</div>
-              <div>Precio: ${card.tcgplayer.prices.holofoil.market}</div> */}
+              {/* <div>Puntos HP: {card.hp}</div> */}
+              {/* <div>Precio: ${card.cardmarket.prices.averageSellPrice}</div> */}
             </div>
           </div>
         ))}

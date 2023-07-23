@@ -11,11 +11,8 @@ const AbrirSobre = () => {
   const navigate = useNavigate();
 
   const [sobre, setSobre] = useState([]);
-  const [cards, setCards] = useState([]);
-  const [totalNumberOfCards, setTotalNumberOfCards] = useState(0);
   const [setSelected, setSetSelected] = useState("");
   const [sets, setSets] = useState([]);
-  const [totalNumberOfSets, setTotalNumberOfSets] = useState(0);
 
   const getRandomPokemonCard = async () => {
     const apiUrl = `https://api.pokemontcg.io/v2/cards`;
@@ -31,21 +28,6 @@ const AbrirSobre = () => {
     return randomCard;
   };
 
-  //get the total number of cards from the api and set it to totalCards
-  const getAllCards = async () => {
-    const apiUrl = `https://api.pokemontcg.io/v2/cards`;
-    const response = await fetch(apiUrl, {
-      headers: {
-        "X-Api-Key": apiKey,
-      },
-    });
-    const data = await response.json();
-    const totalCards = data.data;
-    const totalNumberOfCards = totalCards.length;
-    setTotalNumberOfCards(totalNumberOfCards);
-    setCards(totalCards);
-  };
-
   const getAllSets = async () => {
     const apiUrl = `https://api.pokemontcg.io/v2/sets`;
     const response = await fetch(apiUrl, {
@@ -54,15 +36,12 @@ const AbrirSobre = () => {
       },
     });
     const data = await response.json();
-    const totalSets = data.data;
-    const totalNumberOfSets = totalSets.length;
-    setTotalNumberOfSets(totalNumberOfSets);
-    setSets(totalSets);
+    const sets = data.data;
+    setSets(sets);
   };
 
   //on page load get the total number of cards from the api and set it to totalCards
   React.useEffect(() => {
-    getAllCards();
     getAllSets();
   }, []);
 
@@ -186,8 +165,7 @@ const AbrirSobre = () => {
         Abrimos un sobre de cartas de Pokemon? dale!
         <br />
         Hace click en el botón "Abrir sobre" y te saldrán 11 cartas al azar de
-        cualquier set, por ahora hay un total de {totalNumberOfCards} cartas,
-        asi que Suerte!!!
+        cualquier set, asi que Suerte!!!
         <br />
         Fijate que debajo de la carta te va a salir un precio promedio de venta
         en dolares, de esta forma vas a saber si te salió una carta valiosa o
@@ -211,11 +189,16 @@ const AbrirSobre = () => {
               <div>Nombre: {card.name}</div>
               <div>Nro en la Pokedex: {card.nationalPokedexNumbers}</div>
               <div>Set: {card.set.name}</div>
+              <div>Serie: {card.set.series}</div>
+              <div>
+                Fecha de Lanzamiento:{" "}
+                {new Date(card.set.releaseDate).toLocaleDateString("es-AR")}
+              </div>
               <div>Total de Impresiones: {card.set.printedTotal}</div>
               <div>Rareza: {card.rarity}</div>
               <div>Tipo: {card.types.join(", ")}</div>
-              <div>Puntos HP: {card.hp}</div>
-              <div>Precio: ${card.tcgplayer.prices.holofoil.market}</div>
+              {/* <div>Puntos HP: {card.hp}</div> */}
+              <div>Precio: ${card.cardmarket.prices.averageSellPrice}</div>
             </div>
           </div>
         ))}
