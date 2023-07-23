@@ -48,7 +48,7 @@ const AbrirSobre = () => {
   const handleDrawTCGPack = async () => {
     const cards = [];
     handleIsLoading();
-    for (let i = 0; i < 11; i++) {
+    for (let i = 0; i < 10; i++) {
       const card = await getRandomPokemonCard();
       cards.push(card);
     }
@@ -58,7 +58,7 @@ const AbrirSobre = () => {
   const handleButtonAbrirSobre = () => {
     if (sobre.length === 0) {
       handleDrawTCGPack();
-    } else if (sobre.length === 11) {
+    } else if (sobre.length === 10) {
       swal2
         .fire({
           icon: "warning",
@@ -80,7 +80,7 @@ const AbrirSobre = () => {
     swal2.fire({
       title: "Buscando...",
       text: "Ya salen tus cartas! Que pokemon te tocará?",
-      timer: 77000,
+      timer: 70000,
       timerProgressBar: true,
       showConfirmButton: false,
     });
@@ -95,7 +95,7 @@ const AbrirSobre = () => {
         showConfirmButton: false,
         timer: 2000,
       });
-    } else if (sobre.length === 11) {
+    } else if (sobre.length === 10) {
       swal2
         .fire({
           icon: "warning",
@@ -136,7 +136,7 @@ const AbrirSobre = () => {
             navigate("/");
           }
         });
-    } else if (sobre.length === 11) {
+    } else if (sobre.length === 10) {
       swal2
         .fire({
           icon: "warning",
@@ -164,7 +164,7 @@ const AbrirSobre = () => {
       <p className="textSobre">
         Abrimos un sobre de cartas de Pokemon? dale!
         <br />
-        Hace click en el botón "Abrir sobre" y te saldrán 11 cartas al azar de
+        Hace click en el botón "Abrir sobre" y te saldrán 10 cartas al azar de
         cualquier set, asi que Suerte!!!
         <br />
         Fijate que debajo de la carta te va a salir un precio promedio de venta
