@@ -11,6 +11,11 @@ const AbrirSobre = () => {
   const navigate = useNavigate();
 
   const [sobre, setSobre] = useState([]);
+  const [cards, setCards] = useState([]);
+  const [totalNumberOfCards, setTotalNumberOfCards] = useState(0);
+  const [setSelected, setSetSelected] = useState("");
+  const [sets, setSets] = useState([]);
+  const [totalNumberOfSets, setTotalNumberOfSets] = useState(0);
 
   const getRandomPokemonCard = async () => {
     const apiUrl = `https://api.pokemontcg.io/v2/cards`;
@@ -25,6 +30,41 @@ const AbrirSobre = () => {
     const randomCard = data.data[randomIndex];
     return randomCard;
   };
+
+  //get the total number of cards from the api and set it to totalCards
+  const getAllCards = async () => {
+    const apiUrl = `https://api.pokemontcg.io/v2/cards`;
+    const response = await fetch(apiUrl, {
+      headers: {
+        "X-Api-Key": apiKey,
+      },
+    });
+    const data = await response.json();
+    const totalCards = data.data;
+    const totalNumberOfCards = totalCards.length;
+    setTotalNumberOfCards(totalNumberOfCards);
+    setCards(totalCards);
+  };
+
+  const getAllSets = async () => {
+    const apiUrl = `https://api.pokemontcg.io/v2/sets`;
+    const response = await fetch(apiUrl, {
+      headers: {
+        "X-Api-Key": apiKey,
+      },
+    });
+    const data = await response.json();
+    const totalSets = data.data;
+    const totalNumberOfSets = totalSets.length;
+    setTotalNumberOfSets(totalNumberOfSets);
+    setSets(totalSets);
+  };
+
+  //on page load get the total number of cards from the api and set it to totalCards
+  React.useEffect(() => {
+    getAllCards();
+    getAllSets();
+  }, []);
 
   const handleDrawTCGPack = async () => {
     const cards = [];
@@ -145,12 +185,13 @@ const AbrirSobre = () => {
       <p className="textSobre">
         Abrimos un sobre de cartas de Pokemon? dale!
         <br />
-        {/* Fijate que debajo de la carta te va a salir un precio promedio de venta
+        Hace click en el botón "Abrir sobre" y te saldrán 11 cartas al azar de
+        cualquier set, por ahora hay un total de {totalNumberOfCards} cartas,
+        asi que Suerte!!!
+        <br />
+        Fijate que debajo de la carta te va a salir un precio promedio de venta
         en dolares, de esta forma vas a saber si te salió una carta valiosa o
         no.
-        <br /> */}
-        Hace click en el botón "Abrir sobre" y te saldrán 11 cartas, igual que
-        en un sobre real.
         <br />
         Tip: Te pido paciencia, ya que las cartas tardan en salir. Gracias!
       </p>
@@ -174,7 +215,7 @@ const AbrirSobre = () => {
               <div>Rareza: {card.rarity}</div>
               <div>Tipo: {card.types.join(", ")}</div>
               <div>Puntos HP: {card.hp}</div>
-              {/* <div>Precio: ${card.tcgplayer.prices.holofoil.market}</div> */}
+              <div>Precio: ${card.tcgplayer.prices.holofoil.market}</div>
             </div>
           </div>
         ))}
