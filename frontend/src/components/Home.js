@@ -22,8 +22,8 @@ const Home = () => {
       <div className="homeText text-center">
         <h1>Bienvenido al Juego!</h1>
         <h4>
-          Esta pagina se creo con el fin de que los usuarios puedan jugar con
-          las TCG Poke Cartas de una manera mas facil y divertida.
+          Esta pagina se creo con el fin de que puedas jugar con las TCG Poke
+          Cartas de una manera mas facil y divertida.
           <br />
           Otra de las razones de ser de esta pagina es para las personas que
           como yo no tenemos acceso a coleccionar las cartas fisicas, por

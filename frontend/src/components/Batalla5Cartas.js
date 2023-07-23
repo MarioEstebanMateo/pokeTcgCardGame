@@ -11,8 +11,8 @@ const Batalla5Cartas = () => {
 
   const navigate = useNavigate();
 
-  const [isLoading, setIsLoading] = useState();
-  const [isLoading2, setIsLoading2] = useState();
+  // const [isLoading, setIsLoading] = useState();
+  // const [isLoading2, setIsLoading2] = useState();
 
   const [playerCards, setPlayerCards] = useState([]);
   const [computerCards, setComputerCards] = useState([]);
@@ -49,18 +49,27 @@ const Batalla5Cartas = () => {
   };
 
   const handleDrawCardPlayer = async () => {
-    if (playerCards.length < 5) {
-      const card = await getRandomPokemonCardPlayer();
-      setPlayerCards([...playerCards, card]);
-      setPlayerTotalHP(playerTotalHP + parseInt(card.hp || 0));
-      console.log(playerCards);
+    if (computerCards.length === 5 && playerCards.length === 5) {
+      swal2.fire({
+        icon: "warning",
+        title: "Ya sacaste tus 5 cartas y la computadora también!",
+        text: "Ahora hace click en el botón de batalla para ver quién ganó! =)",
+      });
     } else {
-      if (playerCards.length === 5) {
-        swal2.fire({
-          icon: "warning",
-          title: "Ya tenés 5 cartas!",
-          text: "Ahora hace click en el botón de la computadora para que saque sus cartas!",
-        });
+      if (playerCards.length < 5) {
+        handleIsLoading();
+        const card = await getRandomPokemonCardPlayer();
+        setPlayerCards([...playerCards, card]);
+        setPlayerTotalHP(playerTotalHP + parseInt(card.hp || 0));
+        console.log(playerCards);
+      } else {
+        if (playerCards.length === 5) {
+          swal2.fire({
+            icon: "warning",
+            title: "Ya tenés 5 cartas!",
+            text: "Ahora hace click en el botón de la computadora para que saque sus cartas!",
+          });
+        }
       }
     }
   };
@@ -82,6 +91,7 @@ const Batalla5Cartas = () => {
     } else {
       const cards = [];
       let totalHP = 0;
+      handleIsLoading2();
       for (let i = 0; i < 5; i++) {
         const card = await getRandomPokemonCardComputer();
         cards.push(card);
@@ -100,33 +110,87 @@ const Batalla5Cartas = () => {
         title: "El Juego recien empieza!",
         text: "Primero tenés que sacar tus cartas! y la computadora también!",
       });
-      return;
-    }
-    if (playerTotalHP > computerTotalHP) {
-      // setWinner("Ganaste! Felicitaciones! Jugamos de nuevo?");
-      setWinner("Ganaste! Felicitaciones! Jugamos de nuevo?!");
-    } else if (playerTotalHP < computerTotalHP) {
-      setWinner("Perdiste... Yo que vos, jugaría de nuevo!");
-    } else {
-      setWinner("Empate... Jugamos de nuevo?");
-    }
-    swal2
-      .fire({
-        icon: "success",
-        title: "Batalla terminada!",
-        html: `Player HP: ${playerTotalHP} <br> Computer HP: ${computerTotalHP} <br> <br> Resultado: ${winner}`,
-        showDenyButton: true,
-        showCancelButton: true,
-        confirmButtonText: `Nuevo Juego`,
-        denyButtonText: `Ir a Pantalla de Inicio`,
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          handleReset();
-        } else if (result.isDenied) {
-          navigate("/");
-        }
+    } else if (playerTotalHP === 0 || computerTotalHP === 0) {
+      swal2.fire({
+        icon: "error",
+        title: "El Juego recien empieza!",
+        text: "Primero tenés que sacar tus cartas! y la computadora también!",
       });
+    } else if (playerTotalHP !== 0 && computerTotalHP === 0) {
+      swal2.fire({
+        icon: "error",
+        title: "La computadora todavía no sacó sus cartas!",
+        text: "Hace click en el botón de sacar las 5 cartas de la computadora para que pueda sacar sus cartas!",
+      });
+    } else if (playerTotalHP === 0 && computerTotalHP !== 0) {
+      swal2.fire({
+        icon: "error",
+        title: "Todavía no sacaste tus cartas!",
+        text: "Hace click en el botón de sacar una carta para que puedas sacar tus cartas!",
+      });
+    } else {
+      if (playerTotalHP > computerTotalHP) {
+        setWinner("Ganaste!");
+        swal2
+          .fire({
+            icon: "success",
+            title: "Batalla terminada!",
+            html: `Player HP: ${playerTotalHP} <br> Computer HP: ${computerTotalHP} <br> <br> Resultado: Ganaste! Jugamos otra vez?`,
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `Nuevo Juego`,
+            denyButtonText: `Ir a Pantalla de Inicio`,
+            cancelButtonText: "Cancelar",
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              handleReset();
+            } else if (result.isDenied) {
+              navigate("/");
+            }
+          });
+      } else if (playerTotalHP < computerTotalHP) {
+        setWinner("Perdiste!");
+        swal2
+          .fire({
+            icon: "success",
+            title: "Batalla terminada!",
+            html: `Player HP: ${playerTotalHP} <br> Computer HP: ${computerTotalHP} <br> <br> Resultado: Perdiste! Yo que voz me jugaria otro!`,
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `Nuevo Juego`,
+            denyButtonText: `Ir a Pantalla de Inicio`,
+            cancelButtonText: "Cancelar",
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              handleReset();
+            } else if (result.isDenied) {
+              navigate("/");
+            }
+          });
+      } else if (playerTotalHP === computerTotalHP) {
+        setWinner("Empate!");
+        swal2
+          .fire({
+            icon: "success",
+            title: "Batalla terminada!",
+            html: `Player HP: ${playerTotalHP} <br> Computer HP: ${computerTotalHP} <br> <br> Resultado: Empate! Esto no puede quedar así! Juguemos otro! Dale, hace click en "Nuevo Juego"!`,
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `Nuevo Juego`,
+            denyButtonText: `Ir a Pantalla de Inicio`,
+            cancelButtonText: "Cancelar",
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              handleReset();
+            } else if (result.isDenied) {
+              navigate("/");
+            }
+          });
+      }
+    }
   };
 
   const handleReset = () => {
@@ -158,8 +222,23 @@ const Batalla5Cartas = () => {
   };
 
   return (
-    //show playerCards and playerTotalHP
     <div className="board container-fluid text-center">
+      <p className="rules">
+        Reglas:
+        <br />
+        1- Primero saca tus 5 cartas. Haz click en el botón "Sacar una carta" y
+        espera que salga tu carta. Cuando salga, hacé click en el botón de nuevo
+        para que salga otra carta. Repetí esto hasta que tengas 5 cartas.
+        <br />
+        2- Cuando tengas tus 5 cartas, hacé click en el botón "Sacar las 5
+        cartas de la computadora" y esperá a que salgan las 5 cartas de la
+        computadora.
+        <br />
+        3- Cuando salgan las 5 cartas de la computadora, hacé click en el botón
+        "Batalla" para ver quién ganó!
+        <br />
+        Tip: Te pido paciencia, ya que las cartas tardan en salir. Gracias!
+      </p>
       <h2 className="textPlayerAndComputer">Jugador</h2>
       <button id="drawCardPlayerButton" onClick={handleDrawCardPlayer}>
         Sacar una carta
@@ -174,11 +253,16 @@ const Batalla5Cartas = () => {
               src={card.images.small}
               alt={card.name}
             />
-            {/* <p>Set: {card.set.name}</p>
-            <p>Rarity: {card.rarity}</p>
-            <p>Type: {card.types.join(", ")}</p>
-            <p>HP: {card.hp}</p>
-            <p>Price: ${card.cardmarket.prices.averageSellPrice}</p> */}
+            <div className="cardInfo">
+              <div>Nombre: {card.name}</div>
+              <div>Nro en la Pokedex: {card.nationalPokedexNumbers}</div>
+              <div>Set: {card.set.name}</div>
+              <div>Total de Impresiones: {card.set.printedTotal}</div>
+              <div>Rareza: {card.rarity}</div>
+              <div>Tipo: {card.types.join(", ")}</div>
+              {/* <div>Puntos HP: {card.hp}</div>
+              <div>Precio: ${card.tcgplayer.prices.holofoil.market}</div> */}
+            </div>
           </div>
         ))}
       </div>
@@ -191,12 +275,21 @@ const Batalla5Cartas = () => {
         {computerCards.map((card) => (
           <div key={card.id}>
             {/* <h3>{card.name}</h3> */}
-            <img src={card.images.small} alt={card.name} />
-            {/* <p>Set: {card.set.name}</p>
-            <p>Rarity: {card.rarity}</p>
-            <p>Type: {card.types.join(", ")}</p>
-            <p>HP: {card.hp}</p>
-            <p>Price: ${card.cardmarket.prices.averageSellPrice}</p> */}
+            <img
+              className="cardImage"
+              src={card.images.small}
+              alt={card.name}
+            />
+            <div className="cardInfo">
+              <div>Nombre: {card.name}</div>
+              <div>Nro en la Pokedex: {card.nationalPokedexNumbers}</div>
+              <div>Set: {card.set.name}</div>
+              <div>Total de Impresiones: {card.set.printedTotal}</div>
+              <div>Rareza: {card.rarity}</div>
+              <div>Tipo: {card.types.join(", ")}</div>
+              {/* <div>Puntos HP: {card.hp}</div>
+              <div>Precio: ${card.tcgplayer.prices.holofoil.market}</div> */}
+            </div>
           </div>
         ))}
       </div>
