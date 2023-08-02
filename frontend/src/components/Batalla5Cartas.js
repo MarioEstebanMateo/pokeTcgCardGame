@@ -264,7 +264,7 @@ const Batalla5Cartas = () => {
               </div>
               <div>Total de Impresiones: {card.set.printedTotal}</div>
               <div>Rareza: {card.rarity}</div>
-              <div>Tipo: {card.types.join(", ")}</div>
+              <div>Tipo: {card.types}</div>
               {/* <div>Puntos HP: {card.hp}</div> */}
               {/* <div>Precio: ${card.cardmarket.prices.averageSellPrice}</div> */}
             </div>
@@ -296,7 +296,7 @@ const Batalla5Cartas = () => {
               </div>
               <div>Total de Impresiones: {card.set.printedTotal}</div>
               <div>Rareza: {card.rarity}</div>
-              <div>Tipo: {card.types.join(", ")}</div>
+              <div>Tipo: {card.types}</div>
               {/* <div>Puntos HP: {card.hp}</div> */}
               {/* <div>Precio: ${card.cardmarket.prices.averageSellPrice}</div> */}
             </div>
