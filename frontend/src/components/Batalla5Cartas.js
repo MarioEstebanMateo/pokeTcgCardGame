@@ -262,7 +262,9 @@ const Batalla5Cartas = () => {
                 Fecha de Lanzamiento:{" "}
                 {new Date(card.set.releaseDate).toLocaleDateString("es-AR")}
               </div>
-              <div>Total de Impresiones: {card.set.printedTotal}</div>
+              <div>
+                Numero: {card.number}/{card.set.printedTotal}
+              </div>
               <div>Rareza: {card.rarity}</div>
               <div>Tipo: {card.types}</div>
               {/* <div>Puntos HP: {card.hp}</div> */}
@@ -294,7 +296,9 @@ const Batalla5Cartas = () => {
                 Fecha de Lanzamiento:{" "}
                 {new Date(card.set.releaseDate).toLocaleDateString("es-AR")}
               </div>
-              <div>Total de Impresiones: {card.set.printedTotal}</div>
+              <div>
+                Numero: {card.number}/{card.set.printedTotal}
+              </div>
               <div>Rareza: {card.rarity}</div>
               <div>Tipo: {card.types}</div>
               {/* <div>Puntos HP: {card.hp}</div> */}
