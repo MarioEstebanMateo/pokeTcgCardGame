@@ -62,8 +62,8 @@ const AbrirSobre = () => {
       if (response.data.data.length < 11) {
         swal2.fire({
           icon: "error",
-          title: "Insufficient cards in the selected set",
-          text: `The selected set contains only ${response.data.data.length} cards.`,
+          title: "No hay suficientes cartas en este set",
+          text: `El Set seleccionado tiene ${response.data.data.length} cartas, por favor selecciona otro set.`,
         });
       } else {
         const randomIndices = new Set();
@@ -92,8 +92,8 @@ const AbrirSobre = () => {
       if (response.data.data.length < 11) {
         swal2.fire({
           icon: "error",
-          title: "Insufficient cards in all sets",
-          text: "There are not enough cards in all the sets to draw a pack of 11 cards.",
+          title: "No hay suficientes cartas en todos los sets",
+          text: "Hay menos de 11 cartas en todos los sets.",
         });
       } else {
         const randomIndices = new Set();
@@ -155,7 +155,7 @@ const AbrirSobre = () => {
           onClick={drawFromSelectedSet}
           // disabled={!selectedSet}
         >
-          Ver Set
+          Abrir Sobre
         </button>
       </div>
       <div>
@@ -191,6 +191,7 @@ const AbrirSobre = () => {
                         ? card.tcgplayer.prices.normal.market
                         : "No hay precio"}
                     </div> */}
+                <div>Puntos HP: {card.hp}</div>
               </div>
             </div>
           ))}
@@ -250,6 +251,7 @@ const AbrirSobre = () => {
                         ? card.tcgplayer.prices.normal.market
                         : "No hay precio"}
                     </div> */}
+              <div>Puntos HP: {card.hp}</div>
             </div>
           </div>
         ))}

@@ -21,9 +21,17 @@
     margin-bottom: 20px;
     padding-left: 20px;
     padding-right: 20px;
+    text-align: center;
 }
 
-#drawCardPlayerButton {
+.textPlayerAndComputer {
+    font-family: pokeFont3;
+    font-size: 30px;
+    color: #0075BE;
+    text-align: center;
+}
+
+.drawCardButton {
     background-color: #0075BE;
     color: #FFCC00;
     font-family: pokeFont3;
@@ -45,16 +53,16 @@
     color: #0075BE;
 }
 
-#playerCardContainer {
+.cards-container {
     display: flex;
     justify-content: space-evenly;
     flex-direction: row;
-    gap: 30px;
+    gap: 20px;
     flex-wrap: wrap;
     margin-bottom: 20px;
 }
 
-#drawCardsComputerButton{
+.battleButton{
     background-color: #0075BE;
     color: #FFCC00;
     font-family: pokeFont3;
@@ -70,18 +78,9 @@
     margin-bottom: 20px;
 }
 
-#computerCardContainer{
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: row;
-    gap: 30px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-
-#battleButton{
-    background-color: #0075BE;
-    color: #FFCC00;
+.newGameButton {
+    background-color: #2D5A27;
+    color: white;
     font-family: pokeFont3;
     font-size: 20px;
     border-radius: 1rem;
@@ -92,6 +91,15 @@
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    margin-bottom: 20px;
+}
+
+.battleButtonsContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
     margin-bottom: 20px;
 }
 

@@ -184,6 +184,7 @@ const VerSetCompleto = () => {
                         ? card.tcgplayer.prices.normal.market
                         : "No hay precio"}
                     </div> */}
+                    <div>Puntos HP: {card.hp}</div>
                   </div>
                 </div>
               ))}
