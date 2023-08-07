@@ -1,0 +1,122 @@
+@font-face {
+    font-family: pokeFont;
+    src: url('../font/PokemonSolidNormal-xyWR.ttf');
+  }
+  
+  @font-face {
+    font-family: pokeFont2;
+    src: url('../font/PokemonHollowNormal-pyPZ.ttf');
+  }
+  
+  @font-face {
+    font-family: pokeFont3;
+    src: url('../font/PocketMonk-15ze.ttf');
+  }
+
+.textSet {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: bolder;
+    color: #0075BE;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+}
+
+.textSet2 {
+    font-family: pokeFont3;
+    font-size: 20px;
+    font-weight: bolder;
+    color: #0075BE;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+}
+
+.setContainer {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.backToHome{
+    background-color: #0075BE;
+    color: #FFCC00;
+    font-family: pokeFont3;
+    font-size: 20px;
+    border-radius: 1rem;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    margin-bottom: 20px;
+}
+
+.cardImage {
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.cardInfo {
+    font-family: pokeFont3;
+    font-size: 20px;
+    color: #0075BE;
+    margin-top: 20px;
+}
+
+.selectSetContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+#set-select {
+    background-color: white;
+    color: #0075BE;
+    font-family: pokeFont3;
+    font-size: 20px;
+    border-radius: 1rem;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    margin-bottom: 20px;
+
+}
+
+.openSetButton {
+    background-color: #0075BE;
+    color: #FFCC00;
+    font-family: pokeFont3;
+    font-size: 20px;
+    border-radius: 1rem;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    margin-bottom: 20px;
+}
+
+.setLogo {
+    width: 25%;
+    height: 25%;
+    margin-bottom: 20px;
+}

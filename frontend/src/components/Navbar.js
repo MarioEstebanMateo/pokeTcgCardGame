@@ -32,6 +32,16 @@ const Navbar = () => {
             Abrir Sobre
           </NavLink>
         </li>
+        <li>
+          <NavLink
+            className="navLink"
+            exact
+            to="/versetcompleto"
+            activeClassName="active"
+          >
+            Ver Set Completo
+          </NavLink>
+        </li>
       </ul>
     </div>
   );

@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import AbrirSobre from "./components/AbrirSobre";
 import Navbar from "./components/Navbar";
 import Header from "./components/Header";
+import VerSetCompleto from "./components/VerSetCompleto";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/batalla5cartas" element={<Batalla5Cartas />} />
           <Route path="/abrirsobre" element={<AbrirSobre />} />
+          <Route path="/versetcompleto" element={<VerSetCompleto />} />
         </Routes>
         <Footer />
       </Router>

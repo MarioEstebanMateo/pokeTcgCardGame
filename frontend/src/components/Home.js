@@ -42,6 +42,12 @@ const Home = () => {
         <button className="buttonHome" onClick={() => navigate("/abrirsobre")}>
           Abrir Sobre
         </button>
+        <button
+          className="buttonHome"
+          onClick={() => navigate("/versetcompleto")}
+        >
+          Ver Set Completo
+        </button>
       </div>
     </div>
   );

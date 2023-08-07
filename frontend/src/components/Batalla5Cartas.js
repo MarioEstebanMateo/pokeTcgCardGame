@@ -2,17 +2,14 @@ import React, { useState } from "react";
 import "./Batalla5Cartas.css";
 import swal2 from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import "./Batalla5Cartas.css";
 
 const Batalla5Cartas = () => {
-  const apiKey = "28741ca5-7270-449e-9319-8b046277f2ba";
-  // const baseURL = "https://api.pokemontcg.io/v2/cards";
+  const apiKey = process.env.REACT_APP_POKEMON_API_KEY;
 
   const navigate = useNavigate();
-
-  // const [isLoading, setIsLoading] = useState();
-  // const [isLoading2, setIsLoading2] = useState();
 
   const [playerCards, setPlayerCards] = useState([]);
   const [computerCards, setComputerCards] = useState([]);
@@ -21,13 +18,12 @@ const Batalla5Cartas = () => {
   const [winner, setWinner] = useState("");
 
   const getRandomPokemonCardPlayer = async () => {
-    const apiUrl = `https://api.pokemontcg.io/v2/cards`;
-    const response = await fetch(apiUrl, {
+    const response = await axios.get("https://api.pokemontcg.io/v2/cards", {
       headers: {
         "X-Api-Key": apiKey,
       },
     });
-    const data = await response.json();
+    const data = response.data;
     const totalCards = data.data.length;
     const randomIndex = Math.floor(Math.random() * totalCards);
     const randomCard = data.data[randomIndex];
