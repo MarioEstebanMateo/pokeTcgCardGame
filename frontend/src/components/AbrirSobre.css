@@ -49,6 +49,11 @@
     margin-bottom: 20px;
 }
 
+.backToHome:hover {
+    background-color: #FFCC00;
+    color: #0075BE;
+  }
+
 .cardImage {
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
@@ -72,8 +77,8 @@
 }
 
 #set-select {
-    background-color: white;
-    color: #0075BE;
+    background-color: #0075BE;
+    color: #FFCC00;
     font-family: pokeFont3;
     font-size: 20px;
     border-radius: 1rem;
@@ -86,6 +91,11 @@
     -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     margin-bottom: 20px;
 }
+
+#set-select:hover {
+    background-color: white;
+    color: #0075BE;
+  }
 
 .openSetButton {
     background-color: #0075BE;
@@ -102,6 +112,11 @@
     -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     margin-bottom: 20px;
 }
+
+.openSetButton:hover {
+    background-color: #FFCC00;
+    color: #0075BE;
+  }
 
 .setLogo {
     width: 25%;

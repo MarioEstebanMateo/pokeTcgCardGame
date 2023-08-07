@@ -21,6 +21,14 @@ const Batalla5Cartas = () => {
   // }, []);
 
   const fetchPlayerCards = async () => {
+    swal2.fire({
+      title: "Cargando...",
+      text: "Por favor espera mientras se cargan las cartas",
+      timer: 6000,
+      timerProgressBar: true,
+      showConfirmButton: false,
+    });
+
     try {
       const playerCardsResponse = await fetchRandomCards(5);
       setPlayerCards(playerCardsResponse);
@@ -30,6 +38,14 @@ const Batalla5Cartas = () => {
   };
 
   const fetchComputerCards = async () => {
+    swal2.fire({
+      title: "Cargando...",
+      text: "Por favor espera mientras se cargan las cartas",
+      timer: 6000,
+      timerProgressBar: true,
+      showConfirmButton: false,
+    });
+
     try {
       const computerCardsResponse = await fetchRandomCards(5);
       setComputerCards(computerCardsResponse);
@@ -141,6 +157,22 @@ const Batalla5Cartas = () => {
     }
   };
 
+  const newGame = () => {
+    swal2
+      .fire({
+        icon: "warning",
+        title: "Quieres jugar de nuevo?",
+        text: "Si jugas de nuevo se perdera la informacion de las cartas",
+        // showDenyButton: true,
+        showCancelButton: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          handleReset();
+        }
+      });
+  };
+
   const handleReset = () => {
     setPlayerCards([]);
     setComputerCards([]);
@@ -185,7 +217,7 @@ const Batalla5Cartas = () => {
           <p className="textPlayerAndComputer">Tus Cartas</p>
         </div>
         <div className="text-center">
-          <button className="drawCardButton" onClick={fetchPlayerCards}>
+          <button className="drawCardPlayerButton" onClick={fetchPlayerCards}>
             Sacar Cartas Jugador
           </button>
         </div>
@@ -232,7 +264,10 @@ const Batalla5Cartas = () => {
           <p className="textPlayerAndComputer">Cartas de la Computadora</p>
         </div>
         <div className="text-center">
-          <button className="drawCardButton" onClick={fetchComputerCards}>
+          <button
+            className="drawCardComputerButton"
+            onClick={fetchComputerCards}
+          >
             Sacar Cartas Computadora
           </button>
         </div>
@@ -278,7 +313,7 @@ const Batalla5Cartas = () => {
         <button className="battleButton" onClick={playGame}>
           Batalla!
         </button>
-        <button className="newGameButton" onClick={handleReset}>
+        <button className="newGameButton" onClick={newGame}>
           Nuevo Juego
         </button>
       </div>

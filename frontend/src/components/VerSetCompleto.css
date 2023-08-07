@@ -83,8 +83,8 @@
 }
 
 #set-select {
-    background-color: white;
-    color: #0075BE;
+    background-color: #0075BE;
+    color: #FFCC00;
     font-family: pokeFont3;
     font-size: 20px;
     border-radius: 1rem;

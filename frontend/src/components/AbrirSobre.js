@@ -42,12 +42,20 @@ const AbrirSobre = () => {
   const drawFromSelectedSet = async () => {
     if (!selectedSet) {
       swal2.fire({
-        icon: "error",
-        title: "No set selected",
-        text: "Please select a set first.",
+        icon: "warning",
+        title: "No seleccionaste un set",
+        text: "Por favor selecciona un set para ver sus cartas.",
       });
       return;
     }
+
+    swal2.fire({
+      title: "Cargando...",
+      text: "Por favor espera mientras se cargan las cartas",
+      timer: 6000,
+      timerProgressBar: true,
+      showConfirmButton: false,
+    });
 
     try {
       const response = await axios.get(
@@ -82,6 +90,14 @@ const AbrirSobre = () => {
   };
 
   const drawFromAllSets = async () => {
+    swal2.fire({
+      title: "Cargando...",
+      text: "Por favor espera mientras se cargan las cartas",
+      timer: 6000,
+      timerProgressBar: true,
+      showConfirmButton: false,
+    });
+
     try {
       const response = await axios.get("https://api.pokemontcg.io/v2/cards", {
         headers: {
@@ -203,7 +219,7 @@ const AbrirSobre = () => {
         </div>
       </div>
       <p className="textSobre">
-        Te planteo un juego de suerte, te parece?
+        Te propongo un juego de suerte, te parece?
         <br />
         Hace click en el botón "Abrir sobre" y te saldrán 11 cartas al azar de
         cualquier set, imaginate que hay mas de 15.000 cartas, asi que Suerte!!!

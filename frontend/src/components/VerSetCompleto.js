@@ -77,6 +77,14 @@ const VerSetCompleto = () => {
   };
 
   const doFetchCards = async () => {
+    swal2.fire({
+      title: "Cargando...",
+      text: "Por favor espera mientras se cargan las cartas",
+      timer: 6000,
+      timerProgressBar: true,
+      showConfirmButton: false,
+    });
+
     try {
       const response = await axios.get(
         `https://api.pokemontcg.io/v2/cards?q=set.id:${selectedSet}`,
@@ -86,7 +94,11 @@ const VerSetCompleto = () => {
           },
         }
       );
-      setCards(response.data.data);
+      //order cards by number
+      const sortedCards = response.data.data.sort(
+        (a, b) => a.number - b.number
+      );
+      setCards(sortedCards);
     } catch (error) {
       console.error("Error fetching cards:", error);
     }
