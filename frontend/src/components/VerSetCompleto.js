@@ -119,7 +119,7 @@ const VerSetCompleto = () => {
       </p>
       <div className="selectSetContainer">
         <select id="set-select" onChange={handleSetChange} value={selectedSet}>
-          <option value="">Select a set</option>
+          <option value="">Selecciona un Set</option>
           {sets.map((set) => (
             <option key={set.id} value={set.id}>
               {set.name}
