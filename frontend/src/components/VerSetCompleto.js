@@ -42,8 +42,8 @@ const VerSetCompleto = () => {
     if (!selectedSet) {
       swal2.fire({
         icon: "warning",
-        title: "No set selected",
-        text: "Please select a set first.",
+        title: "No seleccionaste un set",
+        text: "Por favor selecciona un set para ver sus cartas.",
       });
       return;
     }
@@ -51,8 +51,8 @@ const VerSetCompleto = () => {
     if (cards.length > 0 && cards[0].set.id === selectedSet) {
       swal2.fire({
         icon: "warning",
-        title: "Same set selected",
-        text: "You are already viewing this set.",
+        title: "Elegiste el mismo set",
+        text: "Por favor selecciona un set diferente para ver sus cartas.",
       });
       return;
     }
@@ -61,8 +61,8 @@ const VerSetCompleto = () => {
       swal2
         .fire({
           icon: "info",
-          title: "Switching sets",
-          text: "The current set displayed will be lost. Continue?",
+          title: "Queres cambiar de set?",
+          text: "Si cambias de set se perdera la informacion del set anterior",
           showCancelButton: true,
         })
         .then((result) => {
