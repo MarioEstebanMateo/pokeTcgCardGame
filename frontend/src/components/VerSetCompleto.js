@@ -175,7 +175,13 @@ const VerSetCompleto = () => {
           <div>
             <div className="textSet2">
               {" "}
-              Set: {cards[0].set.name} (
+              Set:{" "}
+              <img
+                className="setSymbol"
+                src={cards[0].set.images.symbol}
+                alt={cards[0].set.name}
+              />{" "}
+              {cards[0].set.name} (
               {new Date(cards[0].set.releaseDate).getFullYear()}) / Total de
               cartas: {cards.length}
             </div>
