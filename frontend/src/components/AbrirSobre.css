@@ -77,6 +77,22 @@
 }
 
 #set-select {
+  background-color: white;
+  color: #0075BE;
+  font-family: pokeFont3;
+  font-size: 20px;
+  border-radius: 1rem;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  margin-bottom: 20px;
+}
+
+/* #set-select {
     background-color: #0075BE;
     color: #FFCC00;
     font-family: pokeFont3;
@@ -90,12 +106,12 @@
     -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     margin-bottom: 20px;
-}
+} */
 
-#set-select:hover {
+/* #set-select:hover {
     background-color: white;
     color: #0075BE;
-  }
+  } */
 
 .openSetButton {
     background-color: #0075BE;

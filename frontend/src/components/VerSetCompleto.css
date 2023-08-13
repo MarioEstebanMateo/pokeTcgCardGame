@@ -83,8 +83,8 @@
 }
 
 #set-select {
-    background-color: #0075BE;
-    color: #FFCC00;
+    background-color: white;
+    color: #0075BE;
     font-family: pokeFont3;
     font-size: 20px;
     border-radius: 1rem;
@@ -119,3 +119,30 @@
     height: 25%;
     margin-bottom: 20px;
 }
+
+.back-to-top-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: #0075BE;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: opacity 0.3s;
+  }
+  
+  .back-to-top-button.show {
+    display: flex;
+  }
+  
+  .back-to-top-button:hover {
+    background-color: white;
+    color: #0075BE;
+  }

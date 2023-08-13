@@ -121,6 +121,30 @@ const VerSetCompleto = () => {
       });
   };
 
+  const [showButton, setShowButton] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 300) {
+      setShowButton(true);
+    } else {
+      setShowButton(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <div className="container-fluid">
       <p className="textSet">
@@ -186,6 +210,7 @@ const VerSetCompleto = () => {
                     </div>
                     <div>Rareza: {card.rarity}</div>
                     <div>Tipo: {card.types}</div>
+                    <div>Puntos HP: {card.hp}</div>
                     {/* <div>
                       Precio: $
                       {card.tcgplayer.prices.holofoil
@@ -196,7 +221,6 @@ const VerSetCompleto = () => {
                         ? card.tcgplayer.prices.normal.market
                         : "No hay precio"}
                     </div> */}
-                    <div>Puntos HP: {card.hp}</div>
                   </div>
                 </div>
               ))}
@@ -213,6 +237,12 @@ const VerSetCompleto = () => {
           Ir a Pantalla de Inicio
         </button>
       </div>
+      <button
+        className={`back-to-top-button ${showButton ? "show" : ""}`}
+        onClick={scrollToTop}
+      >
+        ↑
+      </button>
     </div>
   );
 };
