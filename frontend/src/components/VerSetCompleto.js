@@ -121,6 +121,8 @@ const VerSetCompleto = () => {
       });
   };
 
+  // ------------------------- Scroll Button -----------------------
+
   const [showButton, setShowButton] = useState(false);
 
   const handleScroll = () => {
@@ -144,6 +146,8 @@ const VerSetCompleto = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  // ------------------------- Fin Scroll Button -----------------------
 
   return (
     <div className="container-fluid">
@@ -195,11 +199,17 @@ const VerSetCompleto = () => {
             <div className="setContainer">
               {cards.map((card) => (
                 <div className="" key={card.id}>
-                  <img
-                    className="cardImage"
-                    src={card.images.small}
-                    alt={card.name}
-                  />
+                  <a
+                    href={card.images.large}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      className="cardImage"
+                      src={card.images.small}
+                      alt={card.name}
+                    />
+                  </a>
                   <div className="cardInfo">
                     <div>Nombre: {card.name}</div>
                     <div>Nro en la Pokedex: {card.nationalPokedexNumbers}</div>

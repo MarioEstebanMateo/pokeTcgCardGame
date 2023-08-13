@@ -66,6 +66,11 @@
   -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 }
 
+/* .cardImage:hover {
+    transform: scale(1.5);
+    transition: transform 0.3s;
+} */
+
 .cardInfo {
     font-family: pokeFont3;
     font-size: 20px;
