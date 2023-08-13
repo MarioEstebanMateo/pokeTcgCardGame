@@ -155,6 +155,10 @@ const VerSetCompleto = () => {
         Queres ver todas las cartas de un set? Selecciona un set y dale a "Ver
         Set"
         <br />
+        Si queres ver una carta con una imagen mas grande, hace click en la
+        carta y se abrira en una nueva pestaña de tu navegador con la imagen mas
+        grande!
+        <br />
         tip: Te pido paciencia, ya que las cartas tardan en salir. Gracias!
       </p>
       <div className="selectSetContainer">
