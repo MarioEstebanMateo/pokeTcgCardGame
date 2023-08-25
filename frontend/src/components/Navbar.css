@@ -13,9 +13,11 @@
   src: url('../font/PocketMonk-15ze.ttf');
 }
 
+.navbar {
+}
+
 .liContainer {
   display: flex;
-  flex-direction: row;
   justify-content: space-around;
   align-items: center;
   width: 100%;
@@ -42,8 +44,8 @@
   color: #FFFFFF;
 }
 
-@media (max-width: 375px) {
-  .navLink {
-    font-size: 0.8rem;
-  }
+.navbar-toggler {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
 }
