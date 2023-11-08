@@ -153,8 +153,10 @@ const AbrirSobre = () => {
         <br />
         Te saldran 11 cartas al azar de ese set. Suerte!
         <br />
-        {/* Fijate que debajo de la carta te va a salir un precio promedio de venta en dolares, de esta forma vas a saber si te salió una carta valiosa o no.
-<br /> */}
+        Fijate que debajo de la carta te va a salir un precio promedio de venta
+        en dolares, de esta forma vas a saber si te salió una carta valiosa o
+        no.
+        <br />
         tip: Te pido paciencia, ya que las cartas tardan en salir. Gracias!
       </p>
       <div className="selectSetContainer">
@@ -197,16 +199,16 @@ const AbrirSobre = () => {
                 </div>
                 <div>Rareza: {card.rarity}</div>
                 <div>Tipo: {card.types}</div>
-                {/* <div>
-                      Precio: $
-                      {card.tcgplayer.prices.holofoil
-                        ? card.tcgplayer.prices.holofoil.market
-                        : card.tcgplayer.prices.reverseHolofoil
-                        ? card.tcgplayer.prices.reverseHolofoil.market
-                        : card.tcgplayer.prices.normal
-                        ? card.tcgplayer.prices.normal.market
-                        : "No hay precio"}
-                    </div> */}
+                <div>
+                  Precio: $
+                  {card?.tcgplayer?.prices?.holofoil?.market
+                    ? card.tcgplayer.prices.holofoil.market
+                    : card?.tcgplayer?.prices?.reverseHolofoil?.market
+                    ? card.tcgplayer.prices.reverseHolofoil.market
+                    : card?.tcgplayer?.prices?.normal?.market
+                    ? card.tcgplayer.prices.normal.market
+                    : "No hay precio"}
+                </div>
                 <div>Puntos HP: {card.hp}</div>
               </div>
             </div>
@@ -224,10 +226,10 @@ const AbrirSobre = () => {
         Hace click en el botón "Abrir sobre" y te saldrán 11 cartas al azar de
         cualquier set, imaginate que hay mas de 15.000 cartas, asi que Suerte!!!
         <br />
-        {/* Fijate que debajo de la carta te va a salir un precio promedio de
-          venta en dolares, de esta forma vas a saber si te salió una carta
-          valiosa o no.
-          <br /> */}
+        Fijate que debajo de la carta te va a salir un precio promedio de venta
+        en dolares, de esta forma vas a saber si te salió una carta valiosa o
+        no.
+        <br />
         Tip: Te pido paciencia, ya que las cartas tardan en salir. Gracias!
       </p>
       <div className="text-center">
@@ -257,16 +259,16 @@ const AbrirSobre = () => {
               </div>
               <div>Rareza: {card.rarity}</div>
               <div>Tipo: {card.types}</div>
-              {/* <div>
-                      Precio: $
-                      {card.tcgplayer.prices.holofoil
-                        ? card.tcgplayer.prices.holofoil.market
-                        : card.tcgplayer.prices.reverseHolofoil
-                        ? card.tcgplayer.prices.reverseHolofoil.market
-                        : card.tcgplayer.prices.normal
-                        ? card.tcgplayer.prices.normal.market
-                        : "No hay precio"}
-                    </div> */}
+              <div>
+                Precio: $
+                {card?.tcgplayer?.prices?.holofoil?.market
+                  ? card.tcgplayer.prices.holofoil.market
+                  : card?.tcgplayer?.prices?.reverseHolofoil?.market
+                  ? card.tcgplayer.prices.reverseHolofoil.market
+                  : card?.tcgplayer?.prices?.normal?.market
+                  ? card.tcgplayer.prices.normal.market
+                  : "No hay precio"}
+              </div>
               <div>Puntos HP: {card.hp}</div>
             </div>
           </div>

@@ -231,16 +231,16 @@ const VerSetCompleto = () => {
                     <div>Rareza: {card.rarity}</div>
                     <div>Tipo: {card.types}</div>
                     <div>Puntos HP: {card.hp}</div>
-                    {/* <div>
+                    <div>
                       Precio: $
-                      {card.tcgplayer.prices.holofoil
+                      {card?.tcgplayer?.prices?.holofoil?.market
                         ? card.tcgplayer.prices.holofoil.market
-                        : card.tcgplayer.prices.reverseHolofoil
+                        : card?.tcgplayer?.prices?.reverseHolofoil?.market
                         ? card.tcgplayer.prices.reverseHolofoil.market
-                        : card.tcgplayer.prices.normal
+                        : card?.tcgplayer?.prices?.normal?.market
                         ? card.tcgplayer.prices.normal.market
                         : "No hay precio"}
-                    </div> */}
+                    </div>
                   </div>
                 </div>
               ))}
