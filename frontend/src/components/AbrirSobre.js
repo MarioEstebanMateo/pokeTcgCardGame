@@ -39,6 +39,16 @@ const AbrirSobre = () => {
     setSelectedSet(event.target.value);
   };
 
+  const showLoading = () => {
+    swal2.fire({
+      title: "Cargando cartas...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        swal2.showLoading();
+      },
+    });
+  };
+
   const drawFromSelectedSet = async () => {
     if (!selectedSet) {
       swal2.fire({
@@ -49,13 +59,7 @@ const AbrirSobre = () => {
       return;
     }
 
-    swal2.fire({
-      title: "Cargando...",
-      text: "Por favor espera mientras se cargan las cartas",
-      timer: 6000,
-      timerProgressBar: true,
-      showConfirmButton: false,
-    });
+    showLoading(); // Show the loading indicator
 
     try {
       const response = await axios.get(
@@ -83,20 +87,21 @@ const AbrirSobre = () => {
         setSelectedSetCards(
           Array.from(randomIndices).map((index) => response.data.data[index])
         );
+        swal2.close(); // Close the loading indicator when cards are loaded
       }
     } catch (error) {
-      console.error("Error fetching selected set cards:", error);
+      console.error("Error fetching cards:", error);
+      swal2.fire({
+        icon: "error",
+        title: "Error cargando cartas",
+        text: "Por favor intenta de nuevo mas tarde",
+      });
+      swal2.close(); // Close the loading indicator when there is an error
     }
   };
 
   const drawFromAllSets = async () => {
-    swal2.fire({
-      title: "Cargando...",
-      text: "Por favor espera mientras se cargan las cartas",
-      timer: 6000,
-      timerProgressBar: true,
-      showConfirmButton: false,
-    });
+    showLoading(); // Show the loading indicator
 
     try {
       const response = await axios.get("https://api.pokemontcg.io/v2/cards", {
@@ -121,9 +126,16 @@ const AbrirSobre = () => {
         setAllSetsCards(
           Array.from(randomIndices).map((index) => response.data.data[index])
         );
+        swal2.close(); // Close the loading indicator when cards are loaded
       }
     } catch (error) {
-      console.error("Error fetching random cards from all sets:", error);
+      console.error("Error fetching cards:", error);
+      swal2.fire({
+        icon: "error",
+        title: "Error cargando cartas",
+        text: "Por favor intenta de nuevo mas tarde",
+      });
+      swal2.close(); // Close the loading indicator when there is an error
     }
   };
 
@@ -143,6 +155,34 @@ const AbrirSobre = () => {
         }
       });
   };
+
+  // ------------------------- Scroll Button -----------------------
+
+  const [showButton, setShowButton] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 300) {
+      setShowButton(true);
+    } else {
+      setShowButton(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // ------------------------- Fin Scroll Button -----------------------
 
   return (
     <div className="container-fluid">
@@ -279,6 +319,12 @@ const AbrirSobre = () => {
           Ir a Pantalla de Inicio
         </button>
       </div>
+      <button
+        className={`back-to-top-button ${showButton ? "show" : ""}`}
+        onClick={scrollToTop}
+      >
+        ↑
+      </button>
     </div>
   );
 };

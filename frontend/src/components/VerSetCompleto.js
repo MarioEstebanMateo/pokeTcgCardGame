@@ -76,14 +76,18 @@ const VerSetCompleto = () => {
     }
   };
 
-  const doFetchCards = async () => {
+  const showLoading = () => {
     swal2.fire({
-      title: "Cargando...",
-      text: "Por favor espera mientras se cargan las cartas",
-      timer: 6000,
-      timerProgressBar: true,
-      showConfirmButton: false,
+      title: "Cargando cartas...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        swal2.showLoading();
+      },
     });
+  };
+
+  const doFetchCards = async () => {
+    showLoading(); // Show the loading indicator
 
     try {
       const response = await axios.get(
@@ -99,8 +103,15 @@ const VerSetCompleto = () => {
         (a, b) => a.number - b.number
       );
       setCards(sortedCards);
+      swal2.close(); // Close the loading indicator when cards are loaded
     } catch (error) {
       console.error("Error fetching cards:", error);
+      swal2.fire({
+        icon: "error",
+        title: "Error cargando cartas",
+        text: "Por favor intenta de nuevo mas tarde",
+      });
+      swal2.close(); // Close the loading indicator when there is an error
     }
   };
 

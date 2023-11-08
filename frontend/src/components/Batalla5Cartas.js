@@ -20,37 +20,49 @@ const Batalla5Cartas = () => {
   //   fetchComputerCards();
   // }, []);
 
-  const fetchPlayerCards = async () => {
+  const showLoading = () => {
     swal2.fire({
-      title: "Cargando...",
-      text: "Por favor espera mientras se cargan las cartas",
-      timer: 6000,
-      timerProgressBar: true,
-      showConfirmButton: false,
+      title: "Cargando cartas...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        swal2.showLoading();
+      },
     });
+  };
+
+  const fetchPlayerCards = async () => {
+    showLoading();
 
     try {
       const playerCardsResponse = await fetchRandomCards(5);
       setPlayerCards(playerCardsResponse);
+      swal2.close();
     } catch (error) {
-      console.error("Error fetching player cards:", error);
+      console.error("Error fetching cards:", error);
+      swal2.fire({
+        icon: "error",
+        title: "Error cargando cartas",
+        text: "Por favor intenta de nuevo mas tarde",
+      });
+      swal2.close(); // Close the loading indicator when there is an error
     }
   };
 
   const fetchComputerCards = async () => {
-    swal2.fire({
-      title: "Cargando...",
-      text: "Por favor espera mientras se cargan las cartas",
-      timer: 6000,
-      timerProgressBar: true,
-      showConfirmButton: false,
-    });
+    showLoading();
 
     try {
       const computerCardsResponse = await fetchRandomCards(5);
       setComputerCards(computerCardsResponse);
+      swal2.close();
     } catch (error) {
-      console.error("Error fetching computer cards:", error);
+      console.error("Error fetching cards:", error);
+      swal2.fire({
+        icon: "error",
+        title: "Error cargando cartas",
+        text: "Por favor intenta de nuevo mas tarde",
+      });
+      swal2.close(); // Close the loading indicator when there is an error
     }
   };
 
@@ -196,6 +208,34 @@ const Batalla5Cartas = () => {
       });
   };
 
+  // ------------------------- Scroll Button -----------------------
+
+  const [showButton, setShowButton] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 300) {
+      setShowButton(true);
+    } else {
+      setShowButton(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // ------------------------- Fin Scroll Button -----------------------
+
   return (
     <div>
       <p className="rules">
@@ -322,6 +362,12 @@ const Batalla5Cartas = () => {
           Ir a Pantalla de Inicio
         </button>
       </div>
+      <button
+        className={`back-to-top-button ${showButton ? "show" : ""}`}
+        onClick={scrollToTop}
+      >
+        ↑
+      </button>
     </div>
   );
 };
