@@ -1,28 +1,32 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import swal2 from "sweetalert2";
 
 import "./VerSetCompleto.css";
 
-const apiKey = process.env.REACT_APP_POKEMON_API_KEY;
-
 const VerSetCompleto = () => {
   const navigate = useNavigate();
-
   const [sets, setSets] = useState([]);
   const [selectedSet, setSelectedSet] = useState("");
   const [cards, setCards] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showButton, setShowButton] = useState(false);
+  const cardsPerPage = 50;
+
+  const indexOfLastCard = currentPage * cardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+  const currentCards = cards.slice(indexOfFirstCard, indexOfLastCard);
+  const totalPages = Math.ceil(cards.length / cardsPerPage);
 
   useEffect(() => {
     const fetchSets = async () => {
       try {
         const response = await axios.get("https://api.pokemontcg.io/v2/sets", {
           headers: {
-            "X-Api-Key": apiKey,
+            "X-Api-Key": process.env.REACT_APP_POKEMON_API_KEY,
           },
         });
-        // order sets by release date from newest to oldest
         const sortedSets = response.data.data.sort(
           (a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)
         );
@@ -34,8 +38,72 @@ const VerSetCompleto = () => {
     fetchSets();
   }, []);
 
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    setShowButton(window.scrollY > 300);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const handleSetChange = (event) => {
     setSelectedSet(event.target.value);
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    scrollToTop();
+  };
+
+  const doFetchCards = async () => {
+    showLoading();
+    try {
+      let allCards = [];
+      let page = 1;
+      let hasMoreCards = true;
+
+      while (hasMoreCards) {
+        const response = await axios.get(
+          `https://api.pokemontcg.io/v2/cards?q=set.id:${selectedSet}&page=${page}&pageSize=250`,
+          {
+            headers: {
+              "X-Api-Key": process.env.REACT_APP_POKEMON_API_KEY,
+            },
+          }
+        );
+
+        const newCards = response.data.data;
+        allCards = [...allCards, ...newCards];
+
+        // Check if we received less than 250 cards, meaning this is the last page
+        if (newCards.length < 250) {
+          hasMoreCards = false;
+        } else {
+          page++;
+        }
+      }
+
+      const sortedCards = allCards.sort((a, b) => a.number - b.number);
+      setCards(sortedCards);
+      setCurrentPage(1);
+      swal2.close();
+    } catch (error) {
+      console.error("Error fetching cards:", error);
+      swal2.fire({
+        icon: "error",
+        title: "Error cargando cartas",
+        text: "Por favor intenta de nuevo mas tarde",
+      });
+      swal2.close();
+    }
   };
 
   const fetchCards = async () => {
@@ -86,35 +154,6 @@ const VerSetCompleto = () => {
     });
   };
 
-  const doFetchCards = async () => {
-    showLoading(); // Show the loading indicator
-
-    try {
-      const response = await axios.get(
-        `https://api.pokemontcg.io/v2/cards?q=set.id:${selectedSet}`,
-        {
-          headers: {
-            "X-Api-Key": apiKey,
-          },
-        }
-      );
-      //order cards by number
-      const sortedCards = response.data.data.sort(
-        (a, b) => a.number - b.number
-      );
-      setCards(sortedCards);
-      swal2.close(); // Close the loading indicator when cards are loaded
-    } catch (error) {
-      console.error("Error fetching cards:", error);
-      swal2.fire({
-        icon: "error",
-        title: "Error cargando cartas",
-        text: "Por favor intenta de nuevo mas tarde",
-      });
-      swal2.close(); // Close the loading indicator when there is an error
-    }
-  };
-
   const warningVolverAlInicioBySet = () => {
     swal2
       .fire({
@@ -132,33 +171,90 @@ const VerSetCompleto = () => {
       });
   };
 
-  // ------------------------- Scroll Button -----------------------
+  const renderPaginationButtons = () => {
+    if (totalPages <= 1) return null;
 
-  const [showButton, setShowButton] = useState(false);
+    const buttons = [];
+    const maxVisibleButtons = 5;
+    let startPage = Math.max(
+      1,
+      currentPage - Math.floor(maxVisibleButtons / 2)
+    );
+    let endPage = Math.min(totalPages, startPage + maxVisibleButtons - 1);
 
-  const handleScroll = () => {
-    if (window.scrollY > 300) {
-      setShowButton(true);
-    } else {
-      setShowButton(false);
+    if (endPage - startPage + 1 < maxVisibleButtons) {
+      startPage = Math.max(1, endPage - maxVisibleButtons + 1);
     }
+
+    // Previous button
+    buttons.push(
+      <button
+        key="prev"
+        onClick={() => handlePageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+        className="paginationButton"
+      >
+        ←
+      </button>
+    );
+
+    // First page
+    if (startPage > 1) {
+      buttons.push(
+        <button
+          key={1}
+          onClick={() => handlePageChange(1)}
+          className={`paginationButton ${currentPage === 1 ? "active" : ""}`}
+        >
+          1
+        </button>
+      );
+      if (startPage > 2) buttons.push(<span key="dots1">...</span>);
+    }
+
+    // Page numbers
+    for (let i = startPage; i <= endPage; i++) {
+      buttons.push(
+        <button
+          key={i}
+          onClick={() => handlePageChange(i)}
+          className={`paginationButton ${currentPage === i ? "active" : ""}`}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    // Last page
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) buttons.push(<span key="dots2">...</span>);
+      buttons.push(
+        <button
+          key={totalPages}
+          onClick={() => handlePageChange(totalPages)}
+          className={`paginationButton ${
+            currentPage === totalPages ? "active" : ""
+          }`}
+        >
+          {totalPages}
+        </button>
+      );
+    }
+
+    // Next button
+    buttons.push(
+      <button
+        key="next"
+        onClick={() => handlePageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className="paginationButton"
+      >
+        →
+      </button>
+    );
+
+    return buttons;
   };
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  // ------------------------- Fin Scroll Button -----------------------
 
   return (
     <div className="container-fluid">
@@ -172,8 +268,14 @@ const VerSetCompleto = () => {
         <br />
         tip: Te pido paciencia, ya que las cartas tardan en salir. Gracias!
       </p>
+
       <div className="selectSetContainer">
-        <select id="set-select" onChange={handleSetChange} value={selectedSet}>
+        <select
+          id="set-select"
+          onChange={handleSetChange}
+          value={selectedSet}
+          className="setSelect"
+        >
           <option value="">Selecciona un Set</option>
           {sets.map((set) => (
             <option key={set.id} value={set.id}>
@@ -181,93 +283,90 @@ const VerSetCompleto = () => {
             </option>
           ))}
         </select>
-        <button
-          className="openSetButton"
-          onClick={fetchCards}
-          // disabled={!selectedSet}
-        >
+
+        <button onClick={fetchCards} className="openSetButton">
           Ver Set
         </button>
       </div>
-      <div>
-        {cards.length > 0 ? (
-          <div>
-            <div className="textSet2">
-              {" "}
-              Set:{" "}
-              <img
-                className="setSymbol"
-                src={cards[0].set.images.symbol}
-                alt={cards[0].set.name}
-              />{" "}
-              {cards[0].set.name} (
-              {new Date(cards[0].set.releaseDate).getFullYear()}) / Total de
-              cartas: {cards.length}
-            </div>
-            <div className="text-center">
-              <img
-                className="setLogo"
-                src={cards[0].set.images.logo}
-                alt={cards[0].set.name}
-              />
-            </div>
-            <div className="setContainer">
-              {cards.map((card) => (
-                <div className="" key={card.id}>
-                  <a
-                    href={card.images.large}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img
-                      className="cardImage"
-                      src={card.images.small}
-                      alt={card.name}
-                    />
-                  </a>
-                  <div className="cardInfo">
-                    <div>Nombre: {card.name}</div>
-                    <div>Nro en la Pokedex: {card.nationalPokedexNumbers}</div>
-                    <div>Set: {card.set.name}</div>
-                    <div>Serie: {card.set.series}</div>
-                    <div>
-                      Fecha de Lanzamiento:{" "}
-                      {new Date(card.set.releaseDate).toLocaleDateString(
-                        "es-AR"
-                      )}
-                    </div>
-                    <div>
-                      Numero: {card.number} / {card.set.printedTotal}
-                    </div>
-                    <div>Rareza: {card.rarity}</div>
-                    <div>Tipo: {card.types}</div>
-                    <div>Puntos HP: {card.hp}</div>
-                    <div>
-                      Precio: $
-                      {card?.tcgplayer?.prices?.holofoil?.market
-                        ? card.tcgplayer.prices.holofoil.market
-                        : card?.tcgplayer?.prices?.reverseHolofoil?.market
-                        ? card.tcgplayer.prices.reverseHolofoil.market
-                        : card?.tcgplayer?.prices?.normal?.market
-                        ? card.tcgplayer.prices.normal.market
-                        : "No hay precio"}
-                    </div>
+
+      {cards.length > 0 && (
+        <div>
+          <div className="textSet2">
+            Set:{" "}
+            <img
+              className="setSymbol"
+              src={cards[0].set.images.symbol}
+              alt={cards[0].set.name}
+            />{" "}
+            {cards[0].set.name} (
+            {new Date(cards[0].set.releaseDate).getFullYear()}) / Total de
+            cartas: {cards.length}
+          </div>
+
+          <div className="text-center">
+            <img
+              className="setLogo"
+              src={cards[0].set.images.logo}
+              alt={cards[0].set.name}
+            />
+          </div>
+
+          <div className="paginationContainer">{renderPaginationButtons()}</div>
+
+          <div className="setContainer">
+            {currentCards.map((card) => (
+              <div className="" key={card.id}>
+                <a
+                  href={card.images.large}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    className="cardImage"
+                    src={card.images.small}
+                    alt={card.name}
+                  />
+                </a>
+                <div className="cardInfo">
+                  <div>Nombre: {card.name}</div>
+                  <div>Nro en la Pokedex: {card.nationalPokedexNumbers}</div>
+                  <div>Set: {card.set.name}</div>
+                  <div>Serie: {card.set.series}</div>
+                  <div>
+                    Fecha de Lanzamiento:{" "}
+                    {new Date(card.set.releaseDate).toLocaleDateString("es-AR")}
+                  </div>
+                  <div>
+                    Numero: {card.number} / {card.set.printedTotal}
+                  </div>
+                  <div>Rareza: {card.rarity}</div>
+                  <div>Tipo: {card.types}</div>
+                  <div>Puntos HP: {card.hp}</div>
+                  <div>
+                    Precio: $
+                    {card?.tcgplayer?.prices?.holofoil?.market
+                      ? card.tcgplayer.prices.holofoil.market
+                      : card?.tcgplayer?.prices?.reverseHolofoil?.market
+                      ? card.tcgplayer.prices.reverseHolofoil.market
+                      : card?.tcgplayer?.prices?.normal?.market
+                      ? card.tcgplayer.prices.normal.market
+                      : "No hay precio"}
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-        ) : (
-          <p className="textSet">
-            No hay cartas para mostrar, por favor selecciona un set
-          </p>
-        )}
-      </div>
+
+          <div className="paginationContainer">{renderPaginationButtons()}</div>
+        </div>
+      )}
+
       <div className="text-center">
-        <button className="backToHome" onClick={warningVolverAlInicioBySet}>
+        <button onClick={warningVolverAlInicioBySet} className="backToHome">
           Ir a Pantalla de Inicio
         </button>
       </div>
+
       <button
         className={`back-to-top-button ${showButton ? "show" : ""}`}
         onClick={scrollToTop}
@@ -277,4 +376,5 @@ const VerSetCompleto = () => {
     </div>
   );
 };
+
 export default VerSetCompleto;
