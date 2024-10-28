@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import swal2 from "sweetalert2";
-
 import "./VerSetCompleto.css";
 
 const VerSetCompleto = () => {
@@ -12,6 +11,7 @@ const VerSetCompleto = () => {
   const [cards, setCards] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [showButton, setShowButton] = useState(false);
+  const [sortOption, setSortOption] = useState("number");
   const cardsPerPage = 50;
 
   const indexOfLastCard = currentPage * cardsPerPage;
@@ -63,6 +63,45 @@ const VerSetCompleto = () => {
     scrollToTop();
   };
 
+  const getCardPrice = (card) => {
+    return (
+      card?.tcgplayer?.prices?.holofoil?.market ||
+      card?.tcgplayer?.prices?.reverseHolofoil?.market ||
+      card?.tcgplayer?.prices?.normal?.market ||
+      0
+    );
+  };
+
+  const sortCards = (cardsToSort, sortType) => {
+    const cardsCopy = [...cardsToSort];
+
+    switch (sortType) {
+      case "number":
+        return cardsCopy.sort((a, b) => a.number - b.number);
+      case "price-asc":
+        return cardsCopy.sort((a, b) => {
+          const priceA = getCardPrice(a) || 0;
+          const priceB = getCardPrice(b) || 0;
+          return priceA - priceB;
+        });
+      case "price-desc":
+        return cardsCopy.sort((a, b) => {
+          const priceA = getCardPrice(a) || 0;
+          const priceB = getCardPrice(b) || 0;
+          return priceB - priceA;
+        });
+      default:
+        return cardsCopy;
+    }
+  };
+
+  const handleSortChange = (event) => {
+    const newSortOption = event.target.value;
+    setSortOption(newSortOption);
+    setCards(sortCards(cards, newSortOption));
+    setCurrentPage(1);
+  };
+
   const doFetchCards = async () => {
     showLoading();
     try {
@@ -83,7 +122,6 @@ const VerSetCompleto = () => {
         const newCards = response.data.data;
         allCards = [...allCards, ...newCards];
 
-        // Check if we received less than 250 cards, meaning this is the last page
         if (newCards.length < 250) {
           hasMoreCards = false;
         } else {
@@ -91,7 +129,7 @@ const VerSetCompleto = () => {
         }
       }
 
-      const sortedCards = allCards.sort((a, b) => a.number - b.number);
+      const sortedCards = sortCards(allCards, sortOption);
       setCards(sortedCards);
       setCurrentPage(1);
       swal2.close();
@@ -186,7 +224,6 @@ const VerSetCompleto = () => {
       startPage = Math.max(1, endPage - maxVisibleButtons + 1);
     }
 
-    // Previous button
     buttons.push(
       <button
         key="prev"
@@ -198,7 +235,6 @@ const VerSetCompleto = () => {
       </button>
     );
 
-    // First page
     if (startPage > 1) {
       buttons.push(
         <button
@@ -212,7 +248,6 @@ const VerSetCompleto = () => {
       if (startPage > 2) buttons.push(<span key="dots1">...</span>);
     }
 
-    // Page numbers
     for (let i = startPage; i <= endPage; i++) {
       buttons.push(
         <button
@@ -225,7 +260,6 @@ const VerSetCompleto = () => {
       );
     }
 
-    // Last page
     if (endPage < totalPages) {
       if (endPage < totalPages - 1) buttons.push(<span key="dots2">...</span>);
       buttons.push(
@@ -241,7 +275,6 @@ const VerSetCompleto = () => {
       );
     }
 
-    // Next button
     buttons.push(
       <button
         key="next"
@@ -313,6 +346,23 @@ const VerSetCompleto = () => {
 
           <div className="paginationContainer">{renderPaginationButtons()}</div>
 
+          <div className="sortingContainer">
+            <select
+              id="sort-select"
+              value={sortOption}
+              onChange={handleSortChange}
+              className="sortSelect"
+            >
+              <option value="number">Ordenar por Número</option>
+              <option value="price-asc">
+                Ordenar por Precio (Menor a Mayor)
+              </option>
+              <option value="price-desc">
+                Ordenar por Precio (Mayor a Menor)
+              </option>
+            </select>
+          </div>
+
           <div className="setContainer">
             {currentCards.map((card) => (
               <div className="" key={card.id}>
@@ -342,16 +392,7 @@ const VerSetCompleto = () => {
                   <div>Rareza: {card.rarity}</div>
                   <div>Tipo: {card.types}</div>
                   <div>Puntos HP: {card.hp}</div>
-                  <div>
-                    Precio: $
-                    {card?.tcgplayer?.prices?.holofoil?.market
-                      ? card.tcgplayer.prices.holofoil.market
-                      : card?.tcgplayer?.prices?.reverseHolofoil?.market
-                      ? card.tcgplayer.prices.reverseHolofoil.market
-                      : card?.tcgplayer?.prices?.normal?.market
-                      ? card.tcgplayer.prices.normal.market
-                      : "No hay precio"}
-                  </div>
+                  <div>Precio: ${getCardPrice(card) || "No hay precio"}</div>
                 </div>
               </div>
             ))}
