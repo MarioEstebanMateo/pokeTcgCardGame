@@ -17,10 +17,10 @@ const Footer = () => {
         son propiedad de The Pokémon Company. Se utilizan aquí bajo los términos
         de uso justo para fines no comerciales y de entretenimiento de fans.
         <br />
-        Las imágenes de las cartas son proporcionadas por la Pokémon TCG
+        ** Las imágenes de las cartas son proporcionadas por la Pokémon TCG
         Developers API y se utilizan aquí bajo los términos de uso de dicha API.
         Para obtener más información, visita el sitio web oficial de la API de
-        Pokémon TCG Developers.
+        Pokémon TCG Developers.**
         <br />
         Este sitio web no ofrece servicios de pago, monetización ni publicidad.
         Es un sitio creado por fans y sin fines comerciales. Este sitio web es
