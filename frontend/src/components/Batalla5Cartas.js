@@ -241,16 +241,17 @@ const Batalla5Cartas = () => {
       <p className="rules">
         Reglas:
         <br />
-        1- Primero saca tus 5 cartas. Haz click en el botón "Sacar Cartas
-        Jugador" y espera a que salgan tu cartas
+        1. Primero, saca tus 5 cartas. Haz clic en el botón "Sacar Cartas
+        Jugador" y espera a que aparezcan tus cartas.
         <br />
-        2- Cuando tengas tus 5 cartas, hacé click en el botón "Sacar Cartas
-        Computadora" y esperá a que salgan las 5 cartas de la computadora.
+        2. Cuando tengas tus 5 cartas, haz clic en el botón "Sacar Cartas
+        Computadora" y espera a que salgan las 5 cartas de la computadora.
         <br />
-        3- Cuando salgan las 5 cartas de la computadora, hacé click en el botón
-        "Batalla" para ver quién ganó!
+        3. Una vez que aparezcan las 5 cartas de la computadora, haz clic en el
+        botón "Batalla" para ver quién ganó.
         <br />
-        Tip: Te pido paciencia, ya que las cartas tardan en salir. Gracias!
+        **Tip:** Agradecemos tu paciencia, ya que las cartas pueden tardar unos
+        momentos en cargarse. ¡Gracias!
       </p>
       <div>
         <div>
@@ -258,7 +259,7 @@ const Batalla5Cartas = () => {
         </div>
         <div className="text-center">
           <button className="drawCardPlayerButton" onClick={fetchPlayerCards}>
-            Sacar Cartas Jugador
+            Sacar Cartas del Jugador
           </button>
         </div>
         <div className="cards-container">

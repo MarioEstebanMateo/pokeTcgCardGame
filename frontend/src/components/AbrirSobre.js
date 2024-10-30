@@ -187,17 +187,17 @@ const AbrirSobre = () => {
   return (
     <div className="container-fluid">
       <p className="textSobre">
-        Queres abrir un sobre de un set en particular? Selecciona el set que te
-        guste (estan ordenados del mas nuevo al mas viejo) y dale al botón"Abrir
-        sobre de este set"
+        ¿Quieres abrir un sobre de un set en particular? Selecciona el set que
+        te guste (están ordenados del más nuevo al más viejo) y haz clic en el
+        botón "Abrir sobre de este set".
         <br />
-        Te saldran 11 cartas al azar de ese set. Suerte!
+        Te saldrán 11 cartas al azar de ese set. ¡Buena suerte!
         <br />
-        Fijate que debajo de la carta te va a salir un precio promedio de venta
-        en dolares, de esta forma vas a saber si te salió una carta valiosa o
-        no.
+        Debajo de cada carta verás un precio promedio de referencia en dólares,
+        lo que te permitirá saber si te salió una carta valiosa o no.
         <br />
-        tip: Te pido paciencia, ya que las cartas tardan en salir. Gracias!
+        **Tip:** Te agradecemos tu paciencia, ya que las cartas pueden tardar un
+        momento en salir. ¡Gracias!
       </p>
       <div className="selectSetContainer">
         <select id="set-select" onChange={handleSetChange} value={selectedSet}>
@@ -261,16 +261,17 @@ const AbrirSobre = () => {
         </div>
       </div>
       <p className="textSobre">
-        Te propongo un juego de suerte, te parece?
+        Te propongo un juego de azar, ¿te animas?
         <br />
-        Hace click en el botón "Abrir sobre" y te saldrán 11 cartas al azar de
-        cualquier set, imaginate que hay mas de 15.000 cartas, asi que Suerte!!!
+        Haz clic en el botón "Abrir sobre" y aparecerán 11 cartas aleatorias de
+        distintos sets. ¡Imagina que hay más de 15,000 cartas en total, así que
+        suerte!
         <br />
-        Fijate que debajo de la carta te va a salir un precio promedio de venta
-        en dolares, de esta forma vas a saber si te salió una carta valiosa o
-        no.
+        Debajo de cada carta verás un precio promedio de referencia en dólares,
+        lo cual te ayudará a conocer su valor aproximado en el mercado.
         <br />
-        Tip: Te pido paciencia, ya que las cartas tardan en salir. Gracias!
+        **Tip:** Agradecemos tu paciencia, ya que las cartas pueden tardar unos
+        momentos en cargarse.
       </p>
       <div className="text-center">
         <button className="openSetButton" onClick={drawFromAllSets}>

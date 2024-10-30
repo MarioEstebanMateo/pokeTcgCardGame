@@ -292,14 +292,14 @@ const VerSetCompleto = () => {
   return (
     <div className="container-fluid">
       <p className="textSet">
-        Queres ver todas las cartas de un set? Selecciona un set y dale a "Ver
-        Set"
+        ¿Quieres ver todas las cartas de un set? Selecciona un set y haz clic en
+        "Ver Set".
         <br />
-        Si queres ver una carta con una imagen mas grande, hace click en la
-        carta y se abrira en una nueva pestaña de tu navegador con la imagen mas
-        grande!
+        Si deseas ver una carta con una imagen más grande, haz clic en la carta
+        y se abrirá en una nueva pestaña de tu navegador.
         <br />
-        tip: Te pido paciencia, ya que las cartas tardan en salir. Gracias!
+        **Tip:** Agradecemos tu paciencia, ya que las cartas pueden tardar unos
+        momentos en cargarse. ¡Gracias!
       </p>
 
       <div className="selectSetContainer">
