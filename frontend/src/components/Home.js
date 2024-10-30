@@ -20,16 +20,17 @@ const Home = () => {
         <img className="imgPoke" src={imgPoke3} alt="logo" />
       </div>
       <div className="homeText text-center">
-        <h1>Bienvenido al Juego!</h1>
+        <h1>¡Bienvenidos al Juego de Cartas Coleccionables!</h1>
         <h4>
-          Esta pagina se creo con el fin de que puedas jugar con las TCG Poke
-          Cartas de una manera mas facil y divertida.
+          Esta página fue creada para que puedas disfrutar de una experiencia de
+          juego con cartas coleccionables de manera accesible y divertida.
           <br />
-          Otra de las razones de ser de esta pagina es para las personas que
-          como yo no tenemos acceso a coleccionar las cartas fisicas, por
-          motivos economicos o dificultad de acceso a las mismas.
+          También está pensada para aquellos que, como yo, tienen dificultad
+          para acceder a las cartas físicas, ya sea por razones económicas o por
+          disponibilidad.
           <br />
-          Espero que disfruten de la pagina y pasen un lindo momento. Saludos!!
+          Espero que disfrutes de esta plataforma y pases un buen momento
+          explorando el mundo de las cartas coleccionables. ¡Saludos!
         </h4>
       </div>
       <div className="buttonContainer text-center">
