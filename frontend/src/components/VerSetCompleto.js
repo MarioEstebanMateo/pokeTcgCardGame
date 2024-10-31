@@ -55,6 +55,7 @@ const VerSetCompleto = () => {
 
   const handleSetChange = (event) => {
     setSelectedSet(event.target.value);
+    setSortOption("number"); //resets sort option when changing set
     setCurrentPage(1);
   };
 

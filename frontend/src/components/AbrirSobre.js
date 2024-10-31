@@ -13,6 +13,8 @@ const AbrirSobre = () => {
   const [selectedSet, setSelectedSet] = useState("");
   const [selectedSetCards, setSelectedSetCards] = useState([]);
   const [sets, setSets] = useState([]);
+  const [sortOption, setSortOption] = useState("number");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchSets = async () => {
@@ -34,8 +36,47 @@ const AbrirSobre = () => {
     fetchSets();
   }, []);
 
+  const getCardPrice = (card) => {
+    return (
+      card?.tcgplayer?.prices?.holofoil?.market ||
+      card?.tcgplayer?.prices?.reverseHolofoil?.market ||
+      card?.tcgplayer?.prices?.normal?.market ||
+      0
+    );
+  };
+
+  const sortCards = (cardsToSort, sortType) => {
+    const cardsCopy = [...cardsToSort];
+
+    switch (sortType) {
+      case "number":
+        return cardsCopy.sort((a, b) => a.number - b.number);
+      case "price-asc":
+        return cardsCopy.sort((a, b) => {
+          const priceA = getCardPrice(a) || 0;
+          const priceB = getCardPrice(b) || 0;
+          return priceA - priceB;
+        });
+      case "price-desc":
+        return cardsCopy.sort((a, b) => {
+          const priceA = getCardPrice(a) || 0;
+          const priceB = getCardPrice(b) || 0;
+          return priceB - priceA;
+        });
+      default:
+        return cardsCopy;
+    }
+  };
+
+  const handleSortChange = (event) => {
+    const newSortOption = event.target.value;
+    setSortOption(newSortOption);
+    setSelectedSetCards(sortCards(selectedSetCards, newSortOption));
+  };
+
   const handleSetChange = (event) => {
     setSelectedSet(event.target.value);
+    setSortOption("number"); // Reset sort option when changing set
   };
 
   const showLoading = () => {
@@ -73,7 +114,8 @@ const AbrirSobre = () => {
       }
     }
 
-    showLoading(); // Show the loading indicator
+    setIsLoading(true);
+    showLoading();
 
     try {
       const response = await axios.get(
@@ -98,10 +140,15 @@ const AbrirSobre = () => {
             Math.floor(Math.random() * response.data.data.length)
           );
         }
-        setSelectedSetCards(
-          Array.from(randomIndices).map((index) => response.data.data[index])
+        const cards = Array.from(randomIndices).map(
+          (index) => response.data.data[index]
         );
-        swal2.close(); // Close the loading indicator when cards are loaded
+
+        // Reset sort option to "number" when opening a new pack
+        setSortOption("number");
+        // Sort cards by number initially
+        const sortedCards = sortCards(cards, "number");
+        setSelectedSetCards(sortedCards);
       }
     } catch (error) {
       console.error("Error fetching cards:", error);
@@ -110,11 +157,13 @@ const AbrirSobre = () => {
         title: "Error cargando cartas",
         text: "Por favor intenta de nuevo mas tarde",
       });
-      swal2.close(); // Close the loading indicator when there is an error
+    } finally {
+      setIsLoading(false);
+      swal2.close();
     }
   };
 
-  const warningVolverAlInicio = () => {
+  const warningVolverAlInicioBySet = () => {
     swal2
       .fire({
         title: "Volver al Inicio?",
@@ -131,34 +180,6 @@ const AbrirSobre = () => {
       });
   };
 
-  // ------------------------- Scroll Button -----------------------
-
-  const [showButton, setShowButton] = useState(false);
-
-  const handleScroll = () => {
-    if (window.scrollY > 300) {
-      setShowButton(true);
-    } else {
-      setShowButton(false);
-    }
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  // ------------------------- Fin Scroll Button -----------------------
-
   return (
     <div className="container-fluid">
       <p className="textSobre">
@@ -174,6 +195,7 @@ const AbrirSobre = () => {
         **Tip:** Te agradecemos tu paciencia, ya que las cartas pueden tardar un
         momento en salir. ¡Gracias!
       </p>
+
       <div className="selectSetContainer">
         <select id="set-select" onChange={handleSetChange} value={selectedSet}>
           <option value="">Selecciona un Set</option>
@@ -183,14 +205,36 @@ const AbrirSobre = () => {
             </option>
           ))}
         </select>
-        <button
-          className="openSetButton"
-          onClick={drawFromSelectedSet}
-          // disabled={!selectedSet}
-        >
+        <button className="openSetButton" onClick={drawFromSelectedSet}>
           Abrir Sobre
         </button>
       </div>
+
+      {selectedSetCards.length > 0 && !isLoading && (
+        <div className="sortingContainer">
+          <select
+            id="sort-select"
+            value={sortOption}
+            onChange={handleSortChange}
+            className="sortSelect"
+          >
+            <option value="number">Ordenar por Número</option>
+            <option value="price-asc">
+              Ordenar por Precio (Menor a Mayor)
+            </option>
+            <option value="price-desc">
+              Ordenar por Precio (Mayor a Menor)
+            </option>
+          </select>
+        </div>
+      )}
+
+      <div className="text-center">
+        <button onClick={warningVolverAlInicioBySet} className="backToHome">
+          Ir a Pantalla de Inicio
+        </button>
+      </div>
+
       <div>
         <div className="cardContainer">
           {selectedSetCards.map((card) => (
@@ -214,33 +258,13 @@ const AbrirSobre = () => {
                 </div>
                 <div>Rareza: {card.rarity}</div>
                 <div>Tipo: {card.types}</div>
-                <div>
-                  Precio: $
-                  {card?.tcgplayer?.prices?.holofoil?.market
-                    ? card.tcgplayer.prices.holofoil.market
-                    : card?.tcgplayer?.prices?.reverseHolofoil?.market
-                    ? card.tcgplayer.prices.reverseHolofoil.market
-                    : card?.tcgplayer?.prices?.normal?.market
-                    ? card.tcgplayer.prices.normal.market
-                    : "No hay precio"}
-                </div>
+                <div>Precio: ${getCardPrice(card) || "No hay precio"}</div>
                 <div>Puntos HP: {card.hp}</div>
               </div>
             </div>
           ))}
         </div>
-        <div className="text-center">
-          <button className="backToHome" onClick={warningVolverAlInicio}>
-            Ir a Pantalla de Inicio
-          </button>
-        </div>
       </div>
-      <button
-        className={`back-to-top-button ${showButton ? "show" : ""}`}
-        onClick={scrollToTop}
-      >
-        ↑
-      </button>
     </div>
   );
 };
