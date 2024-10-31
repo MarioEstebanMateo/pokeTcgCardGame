@@ -12,7 +12,7 @@ const AbrirSobre = () => {
 
   const [selectedSet, setSelectedSet] = useState("");
   const [selectedSetCards, setSelectedSetCards] = useState([]);
-  const [allSetsCards, setAllSetsCards] = useState([]);
+  // const [allSetsCards, setAllSetsCards] = useState([]);
   const [sets, setSets] = useState([]);
 
   useEffect(() => {
@@ -100,44 +100,44 @@ const AbrirSobre = () => {
     }
   };
 
-  const drawFromAllSets = async () => {
-    showLoading(); // Show the loading indicator
+  // const drawFromAllSets = async () => {
+  //   showLoading(); // Show the loading indicator
 
-    try {
-      const response = await axios.get("https://api.pokemontcg.io/v2/cards", {
-        headers: {
-          "X-Api-Key": apiKey,
-        },
-      });
+  //   try {
+  //     const response = await axios.get("https://api.pokemontcg.io/v2/cards", {
+  //       headers: {
+  //         "X-Api-Key": apiKey,
+  //       },
+  //     });
 
-      if (response.data.data.length < 11) {
-        swal2.fire({
-          icon: "error",
-          title: "No hay suficientes cartas en todos los sets",
-          text: "Hay menos de 11 cartas en todos los sets.",
-        });
-      } else {
-        const randomIndices = new Set();
-        while (randomIndices.size < 11) {
-          randomIndices.add(
-            Math.floor(Math.random() * response.data.data.length)
-          );
-        }
-        setAllSetsCards(
-          Array.from(randomIndices).map((index) => response.data.data[index])
-        );
-        swal2.close(); // Close the loading indicator when cards are loaded
-      }
-    } catch (error) {
-      console.error("Error fetching cards:", error);
-      swal2.fire({
-        icon: "error",
-        title: "Error cargando cartas",
-        text: "Por favor intenta de nuevo mas tarde",
-      });
-      swal2.close(); // Close the loading indicator when there is an error
-    }
-  };
+  //     if (response.data.data.length < 11) {
+  //       swal2.fire({
+  //         icon: "error",
+  //         title: "No hay suficientes cartas en todos los sets",
+  //         text: "Hay menos de 11 cartas en todos los sets.",
+  //       });
+  //     } else {
+  //       const randomIndices = new Set();
+  //       while (randomIndices.size < 11) {
+  //         randomIndices.add(
+  //           Math.floor(Math.random() * response.data.data.length)
+  //         );
+  //       }
+  //       setAllSetsCards(
+  //         Array.from(randomIndices).map((index) => response.data.data[index])
+  //       );
+  //       swal2.close(); // Close the loading indicator when cards are loaded
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching cards:", error);
+  //     swal2.fire({
+  //       icon: "error",
+  //       title: "Error cargando cartas",
+  //       text: "Por favor intenta de nuevo mas tarde",
+  //     });
+  //     swal2.close(); // Close the loading indicator when there is an error
+  //   }
+  // };
 
   const warningVolverAlInicio = () => {
     swal2
@@ -260,7 +260,7 @@ const AbrirSobre = () => {
           </button>
         </div>
       </div>
-      <p className="textSobre">
+      {/* <p className="textSobre">
         Te propongo un juego de azar, ¿te animas?
         <br />
         Haz clic en el botón "Abrir sobre" y aparecerán 11 cartas aleatorias de
@@ -319,7 +319,7 @@ const AbrirSobre = () => {
         <button className="backToHome" onClick={warningVolverAlInicio}>
           Ir a Pantalla de Inicio
         </button>
-      </div>
+      </div> */}
       <button
         className={`back-to-top-button ${showButton ? "show" : ""}`}
         onClick={scrollToTop}
