@@ -229,12 +229,6 @@ const AbrirSobre = () => {
         </div>
       )}
 
-      <div className="text-center">
-        <button onClick={warningVolverAlInicioBySet} className="backToHome">
-          Ir a Pantalla de Inicio
-        </button>
-      </div>
-
       <div>
         <div className="cardContainer">
           {selectedSetCards.map((card) => (
@@ -264,6 +258,12 @@ const AbrirSobre = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="text-center">
+        <button onClick={warningVolverAlInicioBySet} className="backToHome">
+          Ir a Pantalla de Inicio
+        </button>
       </div>
     </div>
   );
