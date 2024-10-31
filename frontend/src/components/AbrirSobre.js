@@ -58,6 +58,21 @@ const AbrirSobre = () => {
       return;
     }
 
+    if (selectedSetCards.length > 0) {
+      const result = await swal2.fire({
+        title:
+          "Ya abriste un sobre, si abris otro se perdera la informacion del sobre actual",
+        text: "¿Estas seguro que queres abrir otro sobre?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+      });
+      if (!result.isConfirmed) {
+        return;
+      }
+    }
+
     showLoading(); // Show the loading indicator
 
     try {
