@@ -23,6 +23,7 @@ const AbrirSobre = () => {
           headers: {
             "X-Api-Key": apiKey,
           },
+          timeout: 30000, // 30 seconds timeout
         });
         // order sets by release date from newest to oldest
         const sortedSets = response.data.data.sort(
@@ -31,6 +32,19 @@ const AbrirSobre = () => {
         setSets(sortedSets);
       } catch (error) {
         console.error("Error fetching sets:", error);
+        if (error.code === "ERR_NETWORK" || error.code === "ECONNABORTED") {
+          swal2.fire({
+            icon: "error",
+            title: "Error de conexión",
+            html:
+              "No se pudo conectar con la API de Pokémon TCG.<br><br>" +
+              "Posibles causas:<br>" +
+              "• El servidor de la API está temporalmente no disponible<br>" +
+              "• Problemas de conexión a internet<br>" +
+              "• Firewall bloqueando la conexión<br><br>" +
+              "Por favor, intenta de nuevo en unos minutos.",
+          });
+        }
       }
     };
     fetchSets();
@@ -124,6 +138,7 @@ const AbrirSobre = () => {
           headers: {
             "X-Api-Key": apiKey,
           },
+          timeout: 30000, // 30 seconds timeout
         }
       );
 
@@ -152,10 +167,18 @@ const AbrirSobre = () => {
       }
     } catch (error) {
       console.error("Error fetching cards:", error);
+      let errorMessage = "Por favor intenta de nuevo mas tarde";
+      if (error.code === "ECONNABORTED") {
+        errorMessage =
+          "La solicitud tardó demasiado tiempo. El servidor de la API puede estar lento o no disponible. Intenta de nuevo en unos minutos.";
+      } else if (error.code === "ERR_NETWORK") {
+        errorMessage =
+          "No se pudo conectar con la API. Verifica tu conexión a internet o intenta más tarde.";
+      }
       swal2.fire({
         icon: "error",
         title: "Error cargando cartas",
-        text: "Por favor intenta de nuevo mas tarde",
+        text: errorMessage,
       });
     } finally {
       setIsLoading(false);

@@ -37,6 +37,7 @@ const Batalla5Cartas = () => {
             pageSize: 100,
             select: "id,name,images,hp,nationalPokedexNumbers,set,rarity,types",
           },
+          timeout: 30000, // 30 seconds timeout
         });
 
         const validCards = response.data.data.filter(
@@ -49,7 +50,7 @@ const Batalla5Cartas = () => {
       return selectRandomCards(cardCache, numCards);
     } catch (error) {
       console.error("Error fetching random cards:", error);
-      throw new Error("Failed to fetch cards");
+      throw error;
     }
   };
 
@@ -84,7 +85,7 @@ const Batalla5Cartas = () => {
       const cards = await fetchRandomCards(5);
       setPlayerCards(cards);
     } catch (error) {
-      handleError("Error al cargar las cartas del jugador");
+      handleError("Error al cargar las cartas del jugador", error);
     } finally {
       swal2.close();
       setIsLoading(false);
@@ -110,19 +111,29 @@ const Batalla5Cartas = () => {
       const cards = await fetchRandomCards(5);
       setComputerCards(cards);
     } catch (error) {
-      handleError("Error al cargar las cartas de la computadora");
+      handleError("Error al cargar las cartas de la computadora", error);
     } finally {
       swal2.close();
       setIsLoading(false);
     }
   };
 
-  const handleError = (message) => {
+  const handleError = (message, error = null) => {
     setIsLoading(false);
+    let errorMessage = message;
+    if (error) {
+      if (error.code === "ECONNABORTED") {
+        errorMessage =
+          "La solicitud tardó demasiado tiempo. El servidor de la API puede estar lento o no disponible. Intenta de nuevo en unos minutos.";
+      } else if (error.code === "ERR_NETWORK") {
+        errorMessage =
+          "No se pudo conectar con la API. Verifica tu conexión a internet o intenta más tarde.";
+      }
+    }
     swal2.fire({
       icon: "error",
       title: "Error",
-      text: message,
+      text: errorMessage,
     });
   };
 
